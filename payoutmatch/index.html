@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>payoutmatch — match Stripe payouts to bank deposits</title>
+  <meta name="description" content="payoutmatch is an MCP server that explains Stripe payouts, matches them to bank deposits, and exports balanced journal entries for QuickBooks and Xero.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="wordmark" href="#top" aria-label="payoutmatch home">
+        <span class="mark" aria-hidden="true">pm</span>
+        payoutmatch
+        <span class="proto">prototype</span>
+      </a>
+      <nav class="nav" aria-label="Page">
+        <a href="#why">Why</a>
+        <a href="#demo">Demo</a>
+        <a href="#tools">Tools</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#waitlist">Waitlist</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap" id="top">
+      <p class="eyebrow">MCP server for payout reconciliation</p>
+      <h1>Stripe already has a free payout report. It cannot talk to your assistant, your bank, or your books.</h1>
+      <p class="lede">
+        <strong>payoutmatch</strong> is an MCP endpoint Claude, Cursor, and other assistants call directly.
+        It explains a Stripe payout, matches it to the deposit that actually landed in the bank,
+        and exports a balanced journal for QuickBooks or Xero.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#waitlist">Join the waitlist</a>
+        <a class="btn btn-ghost" href="#demo">Run the mock demo</a>
+      </div>
+      <p class="hero-note">
+        Mock data from the local prototype — 10 payouts, $22,382.90 total, Sep–Oct 2026.
+        Not a live Stripe account. Stripe test-mode adapter is wired; Shopify and PayPal are next, not available yet.
+      </p>
+    </section>
+
+    <section class="wrap section" id="why">
+      <div class="section-head">
+        <p class="eyebrow">The gap</p>
+        <h2>What beats Stripe’s free single-platform report</h2>
+        <p>Stripe’s Dashboard report reconciles payouts on Stripe. payoutmatch is built for the three jobs that report does not do.</p>
+      </div>
+      <div class="why-grid">
+        <article class="why-card">
+          <p class="why-kicker">1</p>
+          <h3>An MCP endpoint assistants call directly</h3>
+          <p>Ask Claude or Cursor to list payouts, explain one, or match a bank CSV. No Dashboard tab, no copy-paste. The four tools run over stdio MCP today.</p>
+        </article>
+        <article class="why-card">
+          <p class="why-kicker">2</p>
+          <h3>Bank matching and bookkeeper-ready journals</h3>
+          <p><code>match_deposits</code> pairs payouts to real bank rows and flags amount or date misses. <code>export_journal</code> writes a balanced CSV, QuickBooks, or Xero journal — debits equal credits.</p>
+        </article>
+        <article class="why-card">
+          <p class="why-kicker">3</p>
+          <h3>Multi-rail, starting with Stripe</h3>
+          <p>Stripe is live in the MCP now (mock fixtures by default; test-mode adapter wired). Shopify and PayPal are on the roadmap and are <strong>not live</strong>.</p>
+        </article>
+      </div>
+
+      <div class="compare" role="region" aria-label="Feature comparison">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Capability</th>
+              <th scope="col">Stripe payout reconciliation report</th>
+              <th scope="col">payoutmatch</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Where it runs</th>
+              <td>Stripe Dashboard, Stripe only</td>
+              <td>MCP tools your assistant calls</td>
+            </tr>
+            <tr>
+              <th scope="row">Callable by Claude, Cursor, and other assistants</th>
+              <td>No</td>
+              <td>Yes — <code>list_payouts</code>, <code>explain_payout</code>, <code>match_deposits</code>, <code>export_journal</code></td>
+            </tr>
+            <tr>
+              <th scope="row">Match payouts to actual bank deposits</th>
+              <td>Not the job of the Dashboard report</td>
+              <td>Yes — <code>match_deposits</code> against a local bank CSV</td>
+            </tr>
+            <tr>
+              <th scope="row">Bookkeeper journal export</th>
+              <td>Not a QBO / Xero journal</td>
+              <td>Yes — balanced <code>csv</code>, <code>qbo</code>, or <code>xero</code> via <code>export_journal</code></td>
+            </tr>
+            <tr>
+              <th scope="row">Rails</th>
+              <td>Stripe only</td>
+              <td>Stripe live in the MCP now; Shopify and PayPal coming next</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="wrap section" id="demo">
+      <div class="section-head">
+        <p class="eyebrow">Interactive preview</p>
+        <h2>Payout to bank deposit, on the real mock output</h2>
+        <p>
+          This demo uses the prototype’s sample fixtures — the same JSON and CSV written by
+          <code>npm run e2e</code> into <code>samples/</code> and <code>fixtures/bank-deposits.csv</code>.
+          Nothing here calls Stripe or a network.
+        </p>
+      </div>
+
+      <div class="demo">
+        <div class="demo-toolbar">
+          <div class="seg" role="tablist" aria-label="Demo views">
+            <button type="button" class="seg-btn is-active" data-view="sources" role="tab" aria-selected="true">Source data</button>
+            <button type="button" class="seg-btn" data-view="match" role="tab" aria-selected="false">match_deposits</button>
+            <button type="button" class="seg-btn" data-view="explain" role="tab" aria-selected="false">explain_payout</button>
+            <button type="button" class="seg-btn" data-view="journal" role="tab" aria-selected="false">export_journal</button>
+          </div>
+          <button type="button" class="btn btn-primary" id="run-match">Run match_deposits</button>
+        </div>
+        <p class="demo-status" id="demo-status" aria-live="polite">
+          10 Stripe payouts totaling $22,382.90, and 11 bank rows. Press “Run match_deposits” to reconcile them.
+        </p>
+
+        <div class="demo-panel is-active" id="view-sources" data-view-panel="sources">
+          <div class="split">
+            <div>
+              <h3><code>list_payouts</code> <span class="chip">mock · 10 payouts</span></h3>
+              <div class="table-scroll">
+                <table class="data" id="payouts-table"></table>
+              </div>
+            </div>
+            <div>
+              <h3>Bank CSV <span class="chip">11 rows</span></h3>
+              <div class="table-scroll">
+                <table class="data" id="bank-table"></table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-panel" id="view-match" data-view-panel="match" hidden>
+          <div class="stats" id="match-stats"></div>
+          <h3>Matched</h3>
+          <div class="table-scroll">
+            <table class="data" id="matched-table"></table>
+          </div>
+          <div class="split">
+            <div>
+              <h3>Unmatched payouts</h3>
+              <div id="unmatched-payouts" class="reason-list"></div>
+            </div>
+            <div>
+              <h3>Unmatched bank rows</h3>
+              <div id="unmatched-bank" class="reason-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-panel" id="view-explain" data-view-panel="explain" hidden>
+          <div class="explain-switch" id="explain-switch"></div>
+          <div id="explain-body"></div>
+        </div>
+
+        <div class="demo-panel" id="view-journal" data-view-panel="journal" hidden>
+          <p class="journal-lead">
+            Balanced journal for <code>po_mock00093</code> arriving 2026-09-27.
+            Debits equal credits at $3,295.18. Formats are the exact <code>export_journal</code> samples.
+          </p>
+          <div class="seg" role="tablist" aria-label="Journal format">
+            <button type="button" class="seg-btn is-active" data-journal="csv">csv</button>
+            <button type="button" class="seg-btn" data-journal="qbo">qbo</button>
+            <button type="button" class="seg-btn" data-journal="xero">xero</button>
+          </div>
+          <div class="table-scroll" id="journal-table-wrap"></div>
+          <pre class="code-block" id="journal-raw" hidden></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="tools">
+      <div class="section-head">
+        <p class="eyebrow">The MCP tools</p>
+        <h2>Four tools, live in the local server today</h2>
+        <p>These are the registered tool names in the MCP server. Names and arguments below match the prototype — nothing invented.</p>
+      </div>
+      <div class="tools">
+        <article class="tool">
+          <h3><code>list_payouts</code></h3>
+          <p class="tool-meta">Optional <code>from</code>, <code>to</code> as YYYY-MM-DD</p>
+          <p>Lists payouts by arrival date, with amount, currency, and status (<code>paid</code>, <code>pending</code>, <code>in_transit</code>, <code>canceled</code>, <code>failed</code>).</p>
+        </article>
+        <article class="tool">
+          <h3><code>explain_payout</code></h3>
+          <p class="tool-meta"><code>payout_id</code>, optional <code>include_lines</code></p>
+          <p>Breaks a payout into gross charges, fees, refunds, disputes, adjustments, other, and net. Sets <code>verified</code> when net equals the payout amount, and warns on FX or gaps.</p>
+        </article>
+        <article class="tool">
+          <h3><code>match_deposits</code></h3>
+          <p class="tool-meta"><code>bank_csv_path</code> (date, description, amount)</p>
+          <p>Matches payouts to bank deposits. Returns matched rows plus unmatched payouts and bank lines, with reasons such as amount off, outside the date window, missing, or not Stripe.</p>
+        </article>
+        <article class="tool">
+          <h3><code>export_journal</code></h3>
+          <p class="tool-meta"><code>payout_id</code>, <code>format</code> of <code>csv</code>, <code>qbo</code>, or <code>xero</code></p>
+          <p>Exports a journal entry for the payout. Debits must equal credits; any unexplained difference is booked to Stripe Clearing.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section" id="rails">
+      <div class="section-head">
+        <p class="eyebrow">Rails</p>
+        <h2>What is live in the MCP, and what is next</h2>
+      </div>
+      <div class="rails">
+        <article class="rail is-live">
+          <p class="rail-status">Live in the MCP</p>
+          <h3>Stripe</h3>
+          <p>All four tools run against deterministic mock fixtures by default. A Stripe test-mode adapter is wired behind a switch for a read-only restricted key. Default mode stays mock, so tests never hit Stripe.</p>
+        </article>
+        <article class="rail is-next">
+          <p class="rail-status">Coming next — not live</p>
+          <h3>Shopify</h3>
+          <p>Planned so a bookkeeper can reconcile more than one payout rail from the same assistant. Not implemented in this prototype.</p>
+        </article>
+        <article class="rail is-next">
+          <p class="rail-status">Coming next — not live</p>
+          <h3>PayPal</h3>
+          <p>Also on the roadmap, not available in the MCP today. This page will not list Shopify or PayPal tools until they ship.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section" id="connect">
+      <div class="section-head">
+        <p class="eyebrow">Plug in locally</p>
+        <h2>Point Claude Desktop or Cursor at the server</h2>
+        <p>Add this to <code>claude_desktop_config.json</code> or <code>~/.cursor/mcp.json</code>, then ask: “List my payouts in October and explain the biggest one,” or “Match payouts against this bank CSV.”</p>
+      </div>
+      <pre class="code-block" tabindex="0"><code>{
+  "mcpServers": {
+    "payoutmatch": {
+      "command": "npx",
+      "args": ["tsx", "/ABSOLUTE/PATH/payoutmatch/src/server.ts"]
+    }
+  }
+}</code></pre>
+      <p class="fine">The server uses a read-only restricted key for Stripe. The prototype does not store payout data server-side beyond a local usage counter for the free-tier stub.</p>
+    </section>
+
+    <section class="wrap section" id="pricing">
+      <div class="section-head">
+        <p class="eyebrow">Pricing from day one</p>
+        <h2>Try three payouts free. Pay when it earns its keep.</h2>
+        <p>No annual plan yet. Anyone who asks gets a refund within 30 days.</p>
+      </div>
+      <div class="pricing">
+        <article class="plan">
+          <h3>Free</h3>
+          <p class="price"><span class="amount">$0</span></p>
+          <ul>
+            <li>3 payouts per month</li>
+            <li>Enough to see an explanation, a match, and whether the numbers verify</li>
+          </ul>
+        </article>
+        <article class="plan plan-solo">
+          <h3>Solo</h3>
+          <p class="price"><span class="amount">$19</span><span class="per">/mo</span></p>
+          <ul>
+            <li>Unlimited payouts</li>
+            <li>1 Stripe account</li>
+          </ul>
+        </article>
+        <article class="plan plan-firm">
+          <p class="plan-flag">For firms</p>
+          <h3>Bookkeeper</h3>
+          <p class="price"><span class="amount">$49</span><span class="per">/mo</span></p>
+          <ul>
+            <li>Up to 15 client Stripe accounts</li>
+            <li>Journal export (<code>csv</code>, <code>qbo</code>, <code>xero</code>)</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section" id="privacy">
+      <div class="section-head">
+        <p class="eyebrow">Privacy</p>
+        <h2>Your key, your data</h2>
+        <p>
+          You bring your own Stripe <strong>restricted read-only key</strong>. payoutmatch does not take a write key and does not store payout data server-side beyond a usage counter.
+          If you join the waitlist, your email and optional note are delivered by Formsubmit to the payoutmatch inbox so we can follow up. We do not sell this list.
+        </p>
+      </div>
+    </section>
+
+    <section class="wrap section" id="waitlist">
+      <div class="section-head">
+        <p class="eyebrow">Waitlist</p>
+        <h2>Get in line to connect your Stripe account</h2>
+        <p>
+          Join the waitlist and we will email you when you can plug payoutmatch into your assistant.
+          No spam, and we will not share your address.
+        </p>
+      </div>
+      <form class="waitlist" id="waitlist-form" novalidate>
+        <div class="honeypot" aria-hidden="true">
+          <label for="wl-company">Company</label>
+          <input id="wl-company" name="_honey" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="wl-email">Email <span class="req">required</span></label>
+          <input id="wl-email" name="email" type="email" autocomplete="email" required placeholder="you@firm.com">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="wl-name">Name</label>
+            <input id="wl-name" name="name" type="text" autocomplete="name" placeholder="Optional">
+          </div>
+          <div class="field">
+            <label for="wl-role">Role</label>
+            <select id="wl-role" name="role">
+              <option value="solo">Solo operator</option>
+              <option value="bookkeeper" selected>Bookkeeper</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="wl-note">What would you use first?</label>
+          <textarea id="wl-note" name="note" rows="3" placeholder="Optional — e.g. match Stripe payouts to a bank CSV, or QBO journals for clients."></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="wl-submit">Join the waitlist</button>
+        </div>
+        <p class="form-msg" id="form-msg" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p>payoutmatch — early access waitlist.</p>
+      <p>Demo figures are example data from mock fixtures, not a customer account.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
