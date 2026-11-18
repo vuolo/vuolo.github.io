@@ -1,7 +1,7 @@
 // Waitlist form posts to Formsubmit (free, no account), which emails vuolo+lsmigrate@mail.grokbot.com.
 // Mailto fallback if the request fails.
 (function () {
-  const WAITLIST_ENDPOINT = "https://formsubmit.co/ajax/vuolo+lsmigrate@mail.grokbot.com";
+  const WAITLIST_ENDPOINT = "https://formsubmit.co/ajax/7db7805f719951514f29e850aa9bf6b5";
   const WAITLIST_INBOX = "vuolo+lsmigrate@mail.grokbot.com";
   const SUBJECT = "LS Exit inquiry";
   const form = document.getElementById("waitlist-form");
