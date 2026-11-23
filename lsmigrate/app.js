@@ -31,6 +31,7 @@
     const payload = {
       email,
       company: String(data.company || "").trim(),
+      destination: String(data.destination || "").trim(),
       plan: String(data.plan || "").trim(),
       note: String(data.note || "").trim(),
       _subject: SUBJECT,
@@ -56,6 +57,7 @@
         + "&body=" + encodeURIComponent(
           "Email: " + email
           + "\nCompany: " + payload.company
+          + "\nDestination: " + payload.destination
           + "\nPlan: " + payload.plan
           + "\nNote: " + payload.note
         );
