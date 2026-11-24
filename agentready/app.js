@@ -16,7 +16,7 @@
     const honey = String(data._honey || "").trim();
     if (honey) {
       msg.className = "form-msg is-ok";
-      msg.textContent = "Thanks — I got your note and will be in touch.";
+      msg.textContent = "Thanks. I got your note and will be in touch.";
       form.reset();
       return;
     }
@@ -49,7 +49,7 @@
       }
       form.reset();
       msg.className = "form-msg is-ok";
-      msg.textContent = "Thanks — I got your note and will email you at " + email + " to book a 20-minute scoping call.";
+      msg.textContent = "Thanks. I got your note and will email you at " + email + ".";
     } catch (err) {
       const href = "mailto:" + WAITLIST_INBOX
         + "?subject=" + encodeURIComponent(SUBJECT)

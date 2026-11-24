@@ -12,7 +12,7 @@
 <header class="site-header">
 <div class="wrap header-inner">
 <a class="wordmark" href="#top"><span class="mark" aria-hidden="true">LX</span>LS Exit<span class="proto">independent</span></a>
-<nav class="nav" aria-label="Page"><a href="#dates">Dates</a><a href="#why">Why</a><a href="#destinations">Destinations</a><a href="#how">How</a><a href="#pricing">Pricing</a><a href="#waitlist">Audit</a></nav>
+<nav class="nav" aria-label="Page"><a href="#dates">Dates</a><a href="#why">Why</a><a href="#destinations">Destinations</a><a href="#how">How</a><a href="#pricing">Pricing</a><a href="#waitlist">Project</a></nav>
 </div>
 </header>
 <main id="main">
@@ -20,7 +20,7 @@
 <p class="eyebrow">Independent Lemon Squeezy migration, fixed price</p>
 <h1>Lemon Squeezy stops processing payments on March 31, 2027. I’ll move your store to Stripe, Polar, Creem, or Paddle.</h1>
 <p class="lede"><strong>LS Exit</strong> is an independent, fixed-price migration. I move products, customers, subscriptions, checkout links, and webhooks off Lemon Squeezy onto the destination that fits: Stripe Managed Payments, Polar, Creem, or Paddle. The hard cases I can scope are PayPal subscribers and license keys, within the limits those providers document. I am not affiliated with Lemon Squeezy, Stripe, Polar, Creem, or Paddle.</p>
-<div class="hero-actions"><a class="btn btn-primary" href="#waitlist">Book a free 15-min migration audit</a><a class="btn btn-ghost" href="#destinations">Compare destinations</a></div>
+<div class="hero-actions"><a class="btn btn-primary" href="#waitlist">Start a project</a><a class="btn btn-ghost" href="#destinations">Compare destinations</a></div>
 <p class="hero-note">Lemon Squeezy dates below are from their migration docs, checked November 18, 2026, and the <a href="https://docs.lemonsqueezy.com/migration/comparison">comparison</a> was checked again November 23, 2026: <a href="https://docs.lemonsqueezy.com/migration">migration guide</a> and <a href="https://docs.lemonsqueezy.com/migration/faq">FAQ</a>. Destination rows are from <a href="https://polar.sh/docs/migrate-lemon-squeezy">Polar</a>, <a href="https://docs.creem.io/getting-started/migrate/lemon-squeezy/technical-guide">Creem</a>, and <a href="https://developer.paddle.com/migrate/other-platforms/lemon-squeezy/">Paddle</a>, read November 23, 2026.</p>
 </section>
 
@@ -28,7 +28,7 @@
 <div class="section-head">
 <p class="eyebrow">Official timeline</p>
 <h2>The March 31, 2027 deadline will not be extended.</h2>
-<p>Lemon Squeezy says existing stores keep working until that date, and that an end-to-end migration — including notifying customers, updating links and integrations, and cleaning up remaining subscriptions — typically takes 4–8 weeks. They recommend starting no later than mid-January 2027. The December 2 tooling is for Stripe Managed Payments. Polar, Creem, and Paddle are separate migrations, described in their own docs.</p>
+<p>Lemon Squeezy says existing stores keep working until that date, and that an end-to-end migration, including notifying customers, updating links and integrations, and cleaning up remaining subscriptions, typically takes 4 to 8 weeks. They recommend starting no later than mid-January 2027. The December 2 tooling is for Stripe Managed Payments. Polar, Creem, and Paddle are separate migrations, described in their own docs.</p>
 </div>
 <div class="compare" role="region" aria-label="Official Lemon Squeezy dates">
 <table>
@@ -51,7 +51,7 @@
 <div class="why-grid">
 <article class="why-card"><p class="why-kicker">1</p><h3>Links and webhooks do not redirect</h3><p>Lemon Squeezy’s FAQ says all checkout links, storefront URLs, embedded checkouts, API endpoints and webhook events must be moved to Stripe or another provider, and that there are no automatic redirects.</p></article>
 <article class="why-card"><p class="why-kicker">2</p><h3>Managed Payments leaves gaps</h3><p>Their comparison says Managed Payments does not include PayPal, storefronts, digital fulfillment (files, license keys, download links) or affiliates. It also says to confirm that your business location and products meet Managed Payments eligibility before you migrate. A store that does not meet it needs a different destination.</p></article>
-<article class="why-card"><p class="why-kicker">3</p><h3>Fixed price, written scope</h3><p>Entry is $399, Standard is $750, Full is $1,500, each for a defined scope. Standard and Full are 5–10 business days of build work. The official 4–8 week window still applies for customer notice (at least 14 days before subscriptions move) and cleanup.</p></article>
+<article class="why-card"><p class="why-kicker">3</p><h3>Fixed price, written scope</h3><p>Entry is $399, Standard is $750, Full is $1,500, each for a defined scope. Standard and Full are 5 to 10 business days of build work. The official 4 to 8 week window still applies for customer notice (at least 14 days before subscriptions move) and cleanup.</p></article>
 </div>
 <div class="compare" role="region" aria-label="What the official Stripe tool covers vs LS Exit">
 <table>
@@ -60,7 +60,7 @@
 <tr><th scope="row">Products, customers, eligible card subscriptions</th><td>Guided migration from December 2, 2026, if you’re eligible</td><td>I run the path that destination documents, then finish the gaps</td></tr>
 <tr><th scope="row">Checkout links, overlays, APIs, webhooks</th><td>Must be rewritten; no automatic redirects</td><td>Checkout links from Entry up. Webhooks from Standard up. Both tested before cutover.</td></tr>
 <tr><th scope="row">License keys and PayPal subscribers</th><td>Not included.</td><td>Full only. Customer-led PayPal checkout, and license-key continuity. See destinations for the limits.</td></tr>
-<tr><th scope="row">Price and timeline</th><td>Your time, plus the official 4–8 week process</td><td>$399, $750, or $1,500 fixed. 5–10 business days of build work on Standard and Full.</td></tr>
+<tr><th scope="row">Price and timeline</th><td>Your time, plus the official 4 to 8 week process</td><td>$399, $750, or $1,500 fixed. 5 to 10 business days of build work on Standard and Full.</td></tr>
 </tbody>
 </table>
 </div>
@@ -122,16 +122,16 @@
 </tbody>
 </table>
 </div>
-<p class="source-note">Sources, read November 23, 2026: <a href="https://docs.lemonsqueezy.com/migration/comparison">Lemon Squeezy comparison</a>, <a href="https://polar.sh/docs/migrate-lemon-squeezy">Polar</a>, <a href="https://docs.creem.io/getting-started/migrate/lemon-squeezy/technical-guide">Creem technical guide</a>, <a href="https://developer.paddle.com/migrate/other-platforms/lemon-squeezy/">Paddle</a>. Polar also says India-issued cards, Cash App Pay, and Link do not all move the same way. I check the methods on your subscriptions during the audit. File delivery and affiliates are uneven too: Managed Payments includes neither; Paddle says affiliates are not part of Paddle and files are yours to rebuild; Creem’s guide says files, license settings, and affiliates are set up again in the dashboard, and referral history does not move.</p>
+<p class="source-note">Sources, read November 23, 2026: <a href="https://docs.lemonsqueezy.com/migration/comparison">Lemon Squeezy comparison</a>, <a href="https://polar.sh/docs/migrate-lemon-squeezy">Polar</a>, <a href="https://docs.creem.io/getting-started/migrate/lemon-squeezy/technical-guide">Creem technical guide</a>, <a href="https://developer.paddle.com/migrate/other-platforms/lemon-squeezy/">Paddle</a>. Polar also says India-issued cards, Cash App Pay, and Link do not all move the same way. I check the methods on your subscriptions when I read the intake. File delivery and affiliates are uneven too: Managed Payments includes neither; Paddle says affiliates are not part of Paddle and files are yours to rebuild; Creem’s guide says files, license settings, and affiliates are set up again in the dashboard, and referral history does not move.</p>
 </section>
 
 <section class="wrap section" id="how">
 <div class="section-head">
 <p class="eyebrow">How it works</p>
-<h2>A free audit, then a fixed-price build</h2>
+<h2>A written intake, then a fixed-price build</h2>
 </div>
 <div class="tools">
-<article class="tool"><h3>1. Free 15-min migration audit</h3><p>A checklist of what you sell, how customers pay (including PayPal), whether you use license keys, file delivery, affiliates, overlays or a custom checkout, and which destination is even eligible.</p></article>
+<article class="tool"><h3>1. Written intake</h3><p>A checklist of what you sell, how customers pay (including PayPal), whether you use license keys, file delivery, affiliates, overlays or a custom checkout, and which destination is even eligible.</p></article>
 <article class="tool"><h3>2. Written scope and price</h3><p>Entry, Standard, or Full, and one of Stripe, Polar, Creem, or Paddle, in writing, before any paid work. If none of the four fits, I’ll say so.</p></article>
 <article class="tool"><h3>3. Build and test</h3><p>Products and checkout on the destination we agreed. Subscribers move only by the path that provider documents today. Where a customer has to check out again, the scope includes canceling the old subscription so they are not billed twice.</p></article>
 <article class="tool"><h3>4. Handoff</h3><p>A short walkthrough, a list of every old Lemon Squeezy link that was replaced, and notes for the customer notice Lemon Squeezy will send (at least 14 days before subscriptions move).</p></article>
@@ -141,20 +141,10 @@
 <section class="wrap section" id="pricing">
 <div class="section-head">
 <p class="eyebrow">Pricing</p>
-<h2>Three fixed prices, plus a free audit.</h2>
+<h2>Three fixed prices.</h2>
 <p>Pay only after we agree on scope in writing. This page does not take a card or a password. I am an independent engineer, not a partner of Lemon Squeezy, Stripe, Polar, Creem, or Paddle.</p>
 </div>
-<div class="pricing cols-4">
-<article class="plan">
-<h3>Migration Audit</h3>
-<p class="price"><span class="amount">Free</span><span class="per">15 min</span></p>
-<ul>
-<li>Checklist of what has to move</li>
-<li>Whether Managed Payments eligibility is even plausible</li>
-<li>Which gaps apply: PayPal subscribers, license keys, files, affiliates, overlays</li>
-<li>A written recommendation: Entry, Standard, Full, and which destination</li>
-</ul>
-</article>
+<div class="pricing">
 <article class="plan">
 <p class="plan-flag">New sales</p>
 <h3>Entry migration</h3>
@@ -174,7 +164,7 @@
 <li>Everything in Entry</li>
 <li>Customers, and card subscriptions by the path that destination documents</li>
 <li>Webhooks swapped and tested</li>
-<li>5–10 business days of build work</li>
+<li>5 to 10 business days of build work</li>
 </ul>
 </article>
 <article class="plan">
@@ -194,16 +184,16 @@
 <section class="wrap section" id="proof">
 <div class="section-head">
 <p class="eyebrow">Who does the work</p>
-<h2>Mike Vuolo, senior full-stack engineer. Independent — not affiliated with Lemon Squeezy, Stripe, Polar, Creem, or Paddle.</h2>
-<p>I build billing and webhook integrations for a living, and I shipped <strong>payoutmatch</strong>, a TypeScript tool that reconciles Stripe payouts to bank deposits. Background: TypeScript/Next.js, Go, Python, AWS/Terraform, and production billing work. If a destination can’t cover something you rely on, I’ll say so on the audit call.</p>
+<h2>Mike Vuolo, senior full-stack engineer. Independent, not affiliated with Lemon Squeezy, Stripe, Polar, Creem, or Paddle.</h2>
+<p>I build billing and webhook integrations for a living, and I shipped <strong>payoutmatch</strong>, a TypeScript tool that reconciles Stripe payouts to bank deposits. Background: TypeScript/Next.js, Go, Python, AWS/Terraform, and production billing work. If a destination can’t cover something you rely on, I’ll say so in my reply.</p>
 </div>
 </section>
 
 <section class="wrap section" id="waitlist">
 <div class="section-head">
-<p class="eyebrow">Audit</p>
-<h2>Book a free 15-minute migration audit</h2>
-<p>Tell me what you sell on Lemon Squeezy, which features you use, and which destination you have in mind. I’ll email you back to schedule a 15-minute checklist call. I will not share your address or use it for anything else. This form does not ask for a password or a payment.</p>
+<p class="eyebrow">Start a project</p>
+<h2>Start a project</h2>
+<p>Tell me what you sell on Lemon Squeezy, which features you use, and which destination you have in mind. I’ll email you back with a destination recommendation and a fixed quote. I will not share your address or use it for anything else. This form does not ask for a password or a payment.</p>
 </div>
 <form class="waitlist" id="waitlist-form" novalidate>
 <div class="honeypot" aria-hidden="true">
@@ -224,16 +214,15 @@
 </div>
 <div class="field"><label for="wl-plan">Interested in</label>
 <select id="wl-plan" name="plan">
-<option value="Migration Audit (free)">Migration Audit (free)</option>
+<option value="Not sure yet">Not sure yet</option>
 <option value="Entry migration ($399)">Entry migration ($399)</option>
 <option value="Standard migration ($750)">Standard migration ($750)</option>
 <option value="Full migration ($1,500)">Full migration ($1,500)</option>
-<option value="Not sure yet">Not sure yet</option>
 </select>
 </div>
 </div>
 <div class="field"><label for="wl-note">What do you sell, and which Lemon Squeezy features do you use?</label><textarea id="wl-note" name="note" rows="3" placeholder="e.g. SaaS subscriptions, license keys for a Mac app, affiliates, PayPal subscribers, overlay on our pricing page. Destination leaning toward Polar."></textarea></div>
-<div class="form-actions"><button type="submit" class="btn btn-primary" id="wl-submit">Request a free audit</button></div>
+<div class="form-actions"><button type="submit" class="btn btn-primary" id="wl-submit">Start a project</button></div>
 <p class="form-msg" id="form-msg" role="status"></p>
 </form>
 </section>
