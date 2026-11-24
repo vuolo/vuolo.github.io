@@ -1,3 +1,12 @@
+// Sticky nav hairline; consulting intake posts to Formsubmit.
+(function () {
+  const header = document.getElementById("site-header");
+  if (!header) return;
+  const onScroll = () => header.classList.toggle("is-stuck", window.scrollY > 8);
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+})();
+
 // Consulting intake posts to Formsubmit (free, no account),
 // which emails vuolo+consulting@mail.grokbot.com.
 // Mailto fallback if the request fails. First submission may require
