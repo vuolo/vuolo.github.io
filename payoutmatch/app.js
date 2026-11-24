@@ -50,13 +50,13 @@ const MATCH = {
       payout_id: "po_mock00064",
       amount: "1348.06",
       arrival_date: "2026-09-21",
-      reason: "Closest candidate is bank line 5 (2026-09-21, 1333.06), off by -15.00 — possible bank fee, partial deposit, or data-entry error."
+      reason: "Closest candidate is bank line 5 (2026-09-21, 1333.06), off by -15.00. Possible causes: a bank fee, a partial deposit, or a data-entry error."
     },
     {
       payout_id: "po_mock00118",
       amount: "2756.60",
       arrival_date: "2026-10-03",
-      reason: "No bank deposit found with this amount or near this date — check whether the payout failed, is still in transit, or went to another account."
+      reason: "No bank deposit found with this amount or near this date. Check whether the payout failed, is still in transit, or went to another account."
     }
   ],
   unmatched_bank_rows: [
@@ -247,7 +247,7 @@ function renderSources() {
           selectedExplain = id;
           renderExplain();
           setView("explain");
-          setStatus("explain_payout for " + id + " — from samples/.");
+          setStatus("explain_payout for " + id + ", from samples/.");
         } else {
           selectedExplain = id;
           setView("explain");
@@ -316,7 +316,7 @@ function renderMatch() {
   document.getElementById("unmatched-bank").innerHTML = MATCH.unmatched_bank_rows.map((r) => `
     <article>
       <div>Line ${r.bank_line} · ${r.date} · ${usd(r.amount)}</div>
-      <p><span class="id">${r.description}</span> — ${r.reason}</p>
+      <p><span class="id">${r.description}</span>: ${r.reason}</p>
     </article>
   `).join("");
 
@@ -363,7 +363,7 @@ function renderExplain() {
         <tbody>${e.lines.map((l) => `<tr>
           <td class="id">${l.id}</td>
           <td>${l.group}</td>
-          <td>${l.description || "—"}</td>
+          <td>${l.description || "-"}</td>
           <td class="num">${usdFromCents(l.amount)}</td>
           <td class="num">${usdFromCents(l.fee)}</td>
           <td class="num">${usdFromCents(l.net)}</td>
@@ -397,7 +397,7 @@ function renderJournal(format) {
     <thead><tr>${j.headers.map((h) => `<th>${h}</th>`).join("")}</tr></thead>
     <tbody>${j.rows.map((r) => `<tr>${r.map((c, i) => {
       const moneyish = /debit|credit|amount|debits|credits/i.test(j.headers[i]);
-      return `<td class="${moneyish ? "num" : ""}">${c === "" ? "—" : c}</td>`;
+      return `<td class="${moneyish ? "num" : ""}">${c === "" ? "-" : c}</td>`;
     }).join("")}</tr>`).join("")}</tbody>
   </table>`;
   document.getElementById("journal-table-wrap").innerHTML = table;

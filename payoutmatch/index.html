@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>payoutmatch — match Stripe payouts to bank deposits</title>
+  <title>payoutmatch: match Stripe payouts to bank deposits</title>
   <meta name="description" content="payoutmatch is an MCP server that explains Stripe payouts, matches them to bank deposits, and exports balanced journal entries for QuickBooks and Xero.">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -41,7 +41,7 @@
         <a class="btn btn-ghost" href="#demo">Run the mock demo</a>
       </div>
       <p class="hero-note">
-        Mock data from the local prototype — 10 payouts, $22,382.90 total, Sep–Oct 2026.
+        Mock data from the local prototype: 10 payouts, $22,382.90 total, September to October 2026.
         Not a live Stripe account. Stripe test-mode adapter is wired; Shopify and PayPal are next, not available yet.
       </p>
     </section>
@@ -61,7 +61,7 @@
         <article class="why-card">
           <p class="why-kicker">2</p>
           <h3>Bank matching and bookkeeper-ready journals</h3>
-          <p><code>match_deposits</code> pairs payouts to real bank rows and flags amount or date misses. <code>export_journal</code> writes a balanced CSV, QuickBooks, or Xero journal — debits equal credits.</p>
+          <p><code>match_deposits</code> pairs payouts to real bank rows and flags amount or date misses. <code>export_journal</code> writes a balanced CSV, QuickBooks, or Xero journal, with debits equal to credits.</p>
         </article>
         <article class="why-card">
           <p class="why-kicker">3</p>
@@ -88,17 +88,17 @@
             <tr>
               <th scope="row">Callable by Claude, Cursor, and other assistants</th>
               <td>No</td>
-              <td>Yes — <code>list_payouts</code>, <code>explain_payout</code>, <code>match_deposits</code>, <code>export_journal</code></td>
+              <td>Yes: <code>list_payouts</code>, <code>explain_payout</code>, <code>match_deposits</code>, <code>export_journal</code></td>
             </tr>
             <tr>
               <th scope="row">Match payouts to actual bank deposits</th>
               <td>Not the job of the Dashboard report</td>
-              <td>Yes — <code>match_deposits</code> against a local bank CSV</td>
+              <td>Yes: <code>match_deposits</code> against a local bank CSV</td>
             </tr>
             <tr>
               <th scope="row">Bookkeeper journal export</th>
               <td>Not a QBO / Xero journal</td>
-              <td>Yes — balanced <code>csv</code>, <code>qbo</code>, or <code>xero</code> via <code>export_journal</code></td>
+              <td>Yes: balanced <code>csv</code>, <code>qbo</code>, or <code>xero</code> via <code>export_journal</code></td>
             </tr>
             <tr>
               <th scope="row">Rails</th>
@@ -115,7 +115,7 @@
         <p class="eyebrow">Interactive preview</p>
         <h2>Payout to bank deposit, on the real mock output</h2>
         <p>
-          This demo uses the prototype’s sample fixtures — the same JSON and CSV written by
+          This demo uses the prototype’s sample fixtures: the same JSON and CSV written by
           <code>npm run e2e</code> into <code>samples/</code> and <code>fixtures/bank-deposits.csv</code>.
           Nothing here calls Stripe or a network.
         </p>
@@ -195,7 +195,7 @@
       <div class="section-head">
         <p class="eyebrow">The MCP tools</p>
         <h2>Four tools, live in the local server today</h2>
-        <p>These are the registered tool names in the MCP server. Names and arguments below match the prototype — nothing invented.</p>
+        <p>These are the registered tool names in the MCP server. Names and arguments below match the prototype. Nothing is invented.</p>
       </div>
       <div class="tools">
         <article class="tool">
@@ -233,12 +233,12 @@
           <p>All four tools run against deterministic mock fixtures by default. A Stripe test-mode adapter is wired behind a switch for a read-only restricted key. Default mode stays mock, so tests never hit Stripe.</p>
         </article>
         <article class="rail is-next">
-          <p class="rail-status">Coming next — not live</p>
+          <p class="rail-status">Coming next. Not live</p>
           <h3>Shopify</h3>
           <p>Planned so a bookkeeper can reconcile more than one payout rail from the same assistant. Not implemented in this prototype.</p>
         </article>
         <article class="rail is-next">
-          <p class="rail-status">Coming next — not live</p>
+          <p class="rail-status">Coming next. Not live</p>
           <h3>PayPal</h3>
           <p>Also on the roadmap, not available in the MCP today. This page will not list Shopify or PayPal tools until they ship.</p>
         </article>
@@ -342,7 +342,7 @@
         </div>
         <div class="field">
           <label for="wl-note">What would you use first?</label>
-          <textarea id="wl-note" name="note" rows="3" placeholder="Optional — e.g. match Stripe payouts to a bank CSV, or QBO journals for clients."></textarea>
+          <textarea id="wl-note" name="note" rows="3" placeholder="Optional. For example, match Stripe payouts to a bank CSV, or QBO journals for clients."></textarea>
         </div>
         <div class="form-actions">
           <button type="submit" class="btn btn-primary" id="wl-submit">Join the waitlist</button>
@@ -354,7 +354,7 @@
 
   <footer class="site-footer">
     <div class="wrap footer-inner">
-      <p>payoutmatch — early access waitlist.</p>
+      <p>payoutmatch. Early access waitlist.</p>
       <p>Demo figures are example data from mock fixtures, not a customer account.</p>
     </div>
   </footer>
