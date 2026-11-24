@@ -41,7 +41,7 @@
           <li><a href="#work">Work</a></li>
           <li><a href="#offers">Offers</a></li>
           <li><a href="#guide">Writing</a></li>
-          <li><a href="#consult">Consult</a></li>
+          <li><a href="#consult">Project</a></li>
         </ul>
       </nav>
     </div>
@@ -54,7 +54,7 @@
         <h1>Make it exist first.</h1>
         <p class="lede">I build software and AI agents. Revenue so far: <span class="zero">$0</span>.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#consult">Book a free intro call</a>
+          <a class="btn btn-primary" href="#consult">Start a project</a>
           <a class="btn btn-ghost" href="#video">Video 1</a>
         </div>
         <p class="hero-note">New videos most weeks on <a href="https://www.youtube.com/@mike-vuolo">YouTube @mike-vuolo</a>. Resume at <a href="https://vuolo.dev">vuolo.dev</a>.</p>
@@ -124,7 +124,7 @@
               <p>Independent Lemon Squeezy to Stripe migrations. Standard is $750 for products, customers, subscriptions, checkout links, and webhooks. Full is $1,500 if you also need license keys, file delivery, affiliates, a PayPal alternative, or a checkout rebuild. Not affiliated with Stripe or Lemon Squeezy.</p>
               <p class="meta">5 to 10 business days for the technical work</p>
             </div>
-            <a class="more" href="https://vuolo.github.io/lsmigrate/">Free 15-minute audit</a>
+            <a class="more" href="https://vuolo.github.io/lsmigrate/">Start a project</a>
           </article>
           <article class="study">
             <p class="study-kicker">03 · Agents</p>
@@ -162,7 +162,7 @@
         <div class="section-head">
           <p class="eyebrow">How we can work</p>
           <h2>A short menu, from a free checklist to a build.</h2>
-          <p>Start wherever it is useful. The intro call is free. Paid work is scoped in writing before anything starts. There is no checkout on this page.</p>
+          <p>Start wherever it is useful. Paid work is scoped in writing before anything starts. There is no checkout on this page.</p>
         </div>
         <div class="ladder">
           <div class="ladder-row">
@@ -208,10 +208,10 @@
           <div class="ladder-row">
             <div class="rung">Consulting</div>
             <div>
-              <h3>Intro call, then a diagnostic if it fits</h3>
-              <p>A free 20-minute intro to see if I can help. If we go further, a $500 diagnostic maps the process and recommends a stack. Builds are quoted after that, using the prices above.</p>
+              <h3>A $500 diagnostic</h3>
+              <p>A $500 diagnostic maps the process and recommends a stack. Builds are quoted after that, using the prices above.</p>
             </div>
-            <div class="amount"><a href="#consult">Free intro</a></div>
+            <div class="amount"><a href="#consult">$500</a></div>
           </div>
         </div>
       </div>
@@ -289,9 +289,9 @@
     <section class="section" id="consult">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Consulting</p>
-          <h2>Tell me what is eating your week. I'll reply to book a free 20-minute intro.</h2>
-          <p>The intro is a fit check. If I'm not the right person, I'll say so. I won't share your address or use it for anything else.</p>
+          <p class="eyebrow">Start a project</p>
+          <h2>Tell me what is eating your week. I'll reply by email.</h2>
+          <p>Tell me the scope and a budget. If I'm not the right person, I'll say so. I won't share your address or use it for anything else.</p>
         </div>
         <form class="form" id="intake-form" novalidate>
           <div class="honeypot" aria-hidden="true">
@@ -316,7 +316,7 @@
           <div class="field field-full">
             <label for="interest">What do you want help with?</label>
             <select id="interest" name="interest">
-              <option value="Not sure yet">Not sure yet. Start with the intro call</option>
+              <option value="Not sure yet">Not sure yet</option>
               <option value="AgentReady MCP build">An MCP server for my product (AgentReady)</option>
               <option value="SturdyFlow automation">A reliable automation (SturdyFlow)</option>
               <option value="LS Exit migration">Lemon Squeezy to Stripe (LS Exit)</option>
@@ -326,11 +326,21 @@
             </select>
           </div>
           <div class="field field-full">
-            <label for="note">A few sentences on the problem</label>
+            <label for="budget">Budget</label>
+            <select id="budget" name="budget">
+              <option value="Not sure yet">Not sure yet</option>
+              <option value="$500 diagnostic">$500 diagnostic</option>
+              <option value="$750 to $1,500">$750 to $1,500</option>
+              <option value="$1,500 to $2,900">$1,500 to $2,900</option>
+              <option value="Something else">Something else</option>
+            </select>
+          </div>
+          <div class="field field-full">
+            <label for="note">Scope. What is eating the week?</label>
             <textarea id="note" name="note" placeholder="What is eating the hours? What have you already tried?"></textarea>
           </div>
           <div class="field-full">
-            <button type="submit" class="btn btn-primary" id="intake-submit">Request a free intro call</button>
+            <button type="submit" class="btn btn-primary" id="intake-submit">Start a project</button>
           </div>
           <p class="form-msg field-full" id="form-msg" role="status"></p>
         </form>

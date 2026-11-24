@@ -14,7 +14,7 @@
 (function () {
   const WAITLIST_ENDPOINT = "https://formsubmit.co/ajax/vuolo+consulting@mail.grokbot.com";
   const WAITLIST_INBOX = "vuolo+consulting@mail.grokbot.com";
-  const SUBJECT = "Consulting intake, vuolo.github.io";
+  const SUBJECT = "Project inquiry, vuolo.github.io";
   const form = document.getElementById("intake-form");
   const msg = document.getElementById("form-msg");
   const submitBtn = document.getElementById("intake-submit");
@@ -51,6 +51,7 @@
       company: String(data.company || "").trim(),
       site: String(data.site || "").trim(),
       interest: String(data.interest || "").trim(),
+      budget: String(data.budget || "").trim(),
       note: String(data.note || "").trim(),
       _subject: SUBJECT,
       _template: "table",
@@ -68,7 +69,7 @@
       }
       form.reset();
       msg.className = "form-msg is-ok";
-      msg.textContent = "Thanks. I got your note and will email you at " + email + " to schedule a free 20-minute intro call.";
+      msg.textContent = "Thanks. I got your note and will email you at " + email + ".";
     } catch (err) {
       const href = "mailto:" + WAITLIST_INBOX
         + "?subject=" + encodeURIComponent(SUBJECT)
@@ -78,6 +79,7 @@
           + "\nCompany: " + payload.company
           + "\nSite: " + payload.site
           + "\nInterest: " + payload.interest
+          + "\nBudget: " + payload.budget
           + "\nNote: " + payload.note
         );
       msg.className = "form-msg is-err";
