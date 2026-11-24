@@ -1,8 +1,20 @@
 # vuolo.github.io
 
-Hosts the public [payoutmatch](https://vuolo.github.io/payoutmatch/) landing page
-and waitlist under `/payoutmatch/`.
+Personal hub for [Mike Vuolo](https://vuolo.github.io/): software, agents, and the honest ledger.
 
-Landing assets also live in [vuolo/payoutmatch](https://github.com/vuolo/payoutmatch).
-This repository exists because a user GitHub Pages site publishes from `main`
-without a separate Pages enablement step.
+The root of this user Pages site is the hub. Product landings already on this repo stay where they are:
+
+- [payoutmatch](https://vuolo.github.io/payoutmatch/)
+- [LS Exit](https://vuolo.github.io/lsmigrate/)
+- [AgentReady](https://vuolo.github.io/agentready/)
+- [SturdyFlow](https://vuolo.github.io/sturdyflow/)
+- [Vuolo Integrations](https://vuolo.github.io/integrations/)
+
+Also on this site:
+
+- [The Agent Ops Scorecard](https://vuolo.github.io/scorecard/) (free)
+- [Make It Exist First, chapter 1](https://vuolo.github.io/guide/chapter-1.html) (free sample)
+
+The consulting intake form emails `vuolo+consulting@mail.grokbot.com` via Formsubmit. The first submission may need a one-time inbox confirmation.
+
+Source copies of the hub, brand assets, and the chapter draft also live in the local brand-hub folder used to ship this.
