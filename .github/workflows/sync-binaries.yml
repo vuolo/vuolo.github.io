@@ -1,0 +1,46 @@
+name: Sync binary assets
+on:
+  push:
+    paths:
+      - "payloads/**"
+      - ".github/workflows/sync-binaries.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  decode:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode payloads into fonts and assets
+        run: |
+          python3 - << 'PY'
+          import base64, io, tarfile, pathlib, subprocess, sys
+          root = pathlib.Path(".")
+          payload = root / "payloads" / "v2-binaries.tar.b64"
+          data = base64.b64decode("".join(payload.read_text().split()))
+          allowed_prefix = ("fonts/", "assets/")
+          changed = []
+          with tarfile.open(fileobj=io.BytesIO(data), mode="r") as tar:
+              for member in tar.getmembers():
+                  if not member.isfile():
+                      continue
+                  name = member.name.lstrip("./")
+                  if not name.startswith(allowed_prefix) or ".." in name:
+                      sys.exit(f"refusing path {name}")
+                  dest = root / name
+                  dest.parent.mkdir(parents=True, exist_ok=True)
+                  blob = tar.extractfile(member).read()
+                  if not dest.exists() or dest.read_bytes() != blob:
+                      dest.write_bytes(blob)
+                      changed.append(name)
+          if not changed:
+              print("no changes")
+              sys.exit(0)
+          print("updated:", *changed, sep="\n  ")
+          subprocess.check_call(["git", "config", "user.name", "github-actions[bot]"])
+          subprocess.check_call(["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"])
+          subprocess.check_call(["git", "add", "--"] + changed)
+          subprocess.check_call(["git", "commit", "-m", "Decode v2 binary fonts and images"])
+          subprocess.check_call(["git", "push"])
+          PY
