@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Agent Ops Scorecard — Mike Vuolo</title>
+  <title>The Agent Ops Scorecard · Mike Vuolo</title>
   <meta name="description" content="A 15-minute checklist for deciding whether a process should be an agent, an automation, or left alone.">
   <link rel="canonical" href="https://vuolo.github.io/scorecard/">
   <meta name="theme-color" content="#F4EFE6">
-  <meta property="og:title" content="The Agent Ops Scorecard — Mike Vuolo">
+  <meta property="og:title" content="The Agent Ops Scorecard · Mike Vuolo">
   <meta property="og:description" content="A 15-minute checklist for deciding whether a process should be an agent, an automation, or left alone.">
   <meta property="og:url" content="https://vuolo.github.io/scorecard/">
   <meta property="og:type" content="article">
@@ -53,7 +53,7 @@
 
       <h2>2. Should a machine touch this at all?</h2>
       <div class="check-item"><span class="check-box" aria-hidden="true"></span><div>The steps are already written down, or you can write them down in under an hour. If they live only in someone’s head, document first.</div></div>
-      <div class="check-item"><span class="check-box" aria-hidden="true"></span><div>The inputs are available through an API, a mailbox, a spreadsheet, or another stable interface — not a screen that changes every week with no access to the data.</div></div>
+      <div class="check-item"><span class="check-box" aria-hidden="true"></span><div>The inputs are available through an API, a mailbox, a spreadsheet, or another stable interface, not a screen that changes every week with no access to the data.</div></div>
       <div class="check-item"><span class="check-box" aria-hidden="true"></span><div>A wrong answer is detectable. You can say how you would catch a bad run before it reaches a customer or the books.</div></div>
       <div class="check-item"><span class="check-box" aria-hidden="true"></span><div>The cost of a quiet failure is clear. If a workflow can fail silently for two weeks, you need alerts before you need more features.</div></div>
 
@@ -61,7 +61,7 @@
       <p>Use the first row that fits.</p>
       <div class="check-item"><span class="check-box" aria-hidden="true"></span><div><strong>Leave it with a person</strong> if the work is rare, highly judgment-heavy, or the downside of a mistake is severe and you cannot check the output. Frequency under a few times a month is often a clue.</div></div>
       <div class="check-item"><span class="check-box" aria-hidden="true"></span><div><strong>Build an automation</strong> if the path is mostly the same every time: same apps, same fields, same “if this, then that.” This is a SturdyFlow-shaped job. Budget for error branches and a 10-case test log, not just the happy path.</div></div>
-      <div class="check-item"><span class="check-box" aria-hidden="true"></span><div><strong>Build an agent front door</strong> if a person wants to ask a product to do a job in language (“explain this payout,” “list open invoices”), and the product already has an API. This is an MCP / AgentReady-shaped job. Scope 4–12 tools, not “a general assistant.”</div></div>
+      <div class="check-item"><span class="check-box" aria-hidden="true"></span><div><strong>Build an agent front door</strong> if a person wants to ask a product to do a job in language (“explain this payout,” “list open invoices”), and the product already has an API. This is an MCP / AgentReady-shaped job. Scope 4 to 12 tools, not “a general assistant.”</div></div>
       <div class="check-item"><span class="check-box" aria-hidden="true"></span><div><strong>Do not start a new SaaS</strong> until you have run the job by hand, then with a script, and you still have people asking to pay for it. A waitlist is not a market.</div></div>
 
       <h2>4. Safety and scope</h2>
@@ -72,7 +72,7 @@
 
       <h2>5. The call</h2>
       <p>Circle one, and write one sentence why.</p>
-      <p>Person &nbsp;&nbsp;·&nbsp;&nbsp; Automation &nbsp;&nbsp;·&nbsp;&nbsp; Agent front door &nbsp;&nbsp;·&nbsp;&nbsp; Not yet — document first</p>
+      <p>Person &nbsp;&nbsp;·&nbsp;&nbsp; Automation &nbsp;&nbsp;·&nbsp;&nbsp; Agent front door &nbsp;&nbsp;·&nbsp;&nbsp; Not yet. Document first</p>
       <p>If you want a second pair of eyes, <a href="/#consult">send me the one-sentence job and the circle</a>. A 20-minute intro call is free. I will not pretend a process is an agent problem if it is not.</p>
       <hr class="quiet">
       <p class="kicker">This scorecard is free. The longer guide, <em>Make It Exist First</em>, is in draft at $29 when it is finished. <a href="/guide/chapter-1.html">Chapter 1 is up now.</a></p>
