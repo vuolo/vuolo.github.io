@@ -2,230 +2,297 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex">
-  <title>softhaus queue</title>
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>softhaus</title>
   <style>
-    @font-face {
-      font-family: Fraunces;
-      src: url("/fonts/fraunces.woff2") format("woff2");
-      font-weight: 500 700;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: Figtree;
-      src: url("/fonts/figtree.woff2") format("woff2");
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: Figtree;
-      src: url("/fonts/figtree-semibold.woff2") format("woff2");
-      font-weight: 600;
-      font-style: normal;
-      font-display: swap;
-    }
     :root {
-      --ink: #1c1916;
-      --paper: #f4efe6;
-      --paper-deep: #e8e0d4;
-      --canal: #243140;
-      --terracotta: #a34a32;
-      --muted: #534e46;
-      --rule: #d4cbbe;
-      --white: #fffdf8;
-      --serif: Fraunces, "Iowan Old Style", Palatino, serif;
-      --sans: Figtree, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --bg: #000;
+      --text: #e7e9ea;
+      --muted: #71767a;
+      --line: #2f3336;
+      --chip: #181818;
+      --btn: #eff3f4;
+      --btn-text: #0f1419;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); }
     body {
       font-family: var(--sans);
-      color: var(--ink);
-      background: var(--paper);
-      line-height: 1.55;
       -webkit-font-smoothing: antialiased;
+      min-height: 100dvh;
+      color-scheme: dark;
     }
-    .wrap { width: min(44rem, 100%); margin: 0 auto; padding: 1.25rem 1.15rem 3rem; }
-    header { margin-bottom: 1.4rem; }
-    .kicker {
-      font-size: 0.8rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+    .wrap {
+      width: min(28rem, 100%);
+      margin: 0 auto;
+      padding: calc(1.15rem + env(safe-area-inset-top)) 1rem calc(2.25rem + env(safe-area-inset-bottom));
+    }
+    .card {
+      background: #000;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      padding: 0.9rem 0.95rem 1rem;
+    }
+    .tweet {
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr);
+      column-gap: 0.75rem;
+    }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      background: #333;
+    }
+    .who {
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+      min-width: 0;
+      line-height: 1.25;
+    }
+    .name {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .handle {
       color: var(--muted);
-      margin: 0 0 0.35rem;
+      font-size: 15px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    h1 {
-      font-family: var(--serif);
-      font-weight: 600;
-      font-size: clamp(1.8rem, 5vw, 2.4rem);
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      margin: 0 0 0.5rem;
+    .caption {
+      margin: 0.15rem 0 0.75rem;
+      font-size: 15px;
+      line-height: 1.35;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
     }
-    .lede { color: var(--muted); margin: 0; }
-    .grid {
+    .media {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.65rem;
-      margin: 1.4rem 0 1.2rem;
+      grid-template-rows: 1fr 1fr;
+      gap: 2px;
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #000;
     }
-    .grid a { display: block; }
-    .grid img {
-      display: block;
+    .media img {
       width: 100%;
-      height: auto;
-      border-radius: 0.7rem;
-      background: var(--paper-deep);
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      background: #16181c;
     }
-    .caption-box {
-      background: var(--white);
-      border: 1px solid var(--rule);
-      border-radius: 0.8rem;
-      padding: 1rem 1.05rem;
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 1.35rem;
     }
-    .caption-box p {
-      font-family: var(--serif);
-      font-size: 1.25rem;
-      margin: 0 0 0.85rem;
-    }
-    .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
     button, .btn {
       appearance: none;
       border: 0;
+      width: 100%;
+      min-height: 3.5rem;
       border-radius: 999px;
-      padding: 0.7rem 1.15rem;
-      font: 600 0.95rem var(--sans);
+      font: 700 1.05rem/1 var(--sans);
+      letter-spacing: -0.01em;
       text-decoration: none;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      -webkit-tap-highlight-color: transparent;
     }
-    button {
-      background: var(--canal);
-      color: var(--white);
+    .ghost {
+      background: var(--chip);
+      color: var(--text);
+      border: 1px solid var(--line);
     }
-    button:hover { filter: brightness(1.08); }
-    .btn {
-      background: var(--terracotta);
-      color: var(--white);
+    .primary {
+      background: var(--btn);
+      color: var(--btn-text);
     }
-    .btn:hover { filter: brightness(1.05); color: var(--white); }
-    .note, .steps {
-      color: var(--muted);
-      font-size: 0.95rem;
+    button:active, .btn:active { transform: scale(0.985); }
+    #downloads {
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.45rem;
+      margin-top: 0.15rem;
     }
-    .note {
-      background: var(--paper-deep);
-      border-radius: 0.8rem;
-      padding: 0.9rem 1rem;
-      margin: 1.1rem 0;
+    #downloads.show { display: grid; }
+    #downloads a {
+      display: block;
+      border-radius: 0.7rem;
+      overflow: hidden;
+      border: 1px solid var(--line);
     }
-    .note strong { color: var(--ink); }
-    h2 {
-      font-family: var(--serif);
-      font-size: 1.35rem;
-      font-weight: 600;
-      margin: 1.8rem 0 0.6rem;
-    }
-    ol { padding-left: 1.2rem; margin: 0.4rem 0 1rem; }
-    li { margin: 0.45rem 0; }
-    code, .mono {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.86em;
-      background: var(--white);
-      padding: 0.05em 0.3em;
-      border-radius: 0.25rem;
+    #downloads img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      display: block;
     }
     .toast {
       position: fixed;
       left: 50%;
-      bottom: 1.2rem;
-      transform: translateX(-50%) translateY(120%);
-      background: var(--canal);
-      color: var(--white);
-      padding: 0.55rem 0.9rem;
+      bottom: calc(1.2rem + env(safe-area-inset-bottom));
+      transform: translateX(-50%) translateY(140%);
+      background: var(--btn);
+      color: var(--btn-text);
+      padding: 0.6rem 1rem;
       border-radius: 999px;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
+      font-weight: 600;
       opacity: 0;
       transition: transform 0.25s ease, opacity 0.25s ease;
       pointer-events: none;
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-    footer { margin-top: 2rem; color: var(--muted); font-size: 0.88rem; }
-    footer a { color: inherit; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <header>
-      <p class="kicker">softhaus</p>
-      <h1>Today's queue</h1>
-      <p class="lede">First post for @softhaus_. The bot drafted it. You post it.</p>
-    </header>
-
-    <div class="caption-box" style="margin-bottom:1.2rem">
-      <p>Add the iPhone Shortcut</p>
-      <p class="steps" style="margin:0 0 0.85rem">This is softhaus post v5. It downloads today's four JPEGs, saves them to Recents, opens the system Share sheet with those Photos assets (choose X), and after you share it asks to delete those four photos. The caption is on the clipboard; paste it in X. Mixing the caption text into the same share would risk hiding X from the sheet, so the text is not attached automatically.</p>
-      <div class="actions">
-        <a class="btn" href="softhaus%20post%20v5.shortcut">Add Shortcut</a>
+    <article class="card">
+      <div class="tweet">
+        <img class="avatar" src="data:image/jpeg;base64,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" alt="">
+        <div>
+          <div class="who">
+            <span class="name">softhaus</span>
+            <span class="handle">@softhaus_</span>
+          </div>
+          <p class="caption" id="caption">a pool in the middle of the house.</p>
+          <div class="media" id="images">
+            <img src="01.jpg" alt="">
+            <img src="02.jpg" alt="">
+            <img src="03.jpg" alt="">
+            <img src="04.jpg" alt="">
+          </div>
+        </div>
       </div>
-      <p class="steps" style="margin:0.85rem 0 0">If Safari only downloads the file, open the Files app, tap <code>softhaus post v5.shortcut</code>, then Open in Shortcuts, then Add Shortcut. This is a new shortcut with softhaus-queue URLs. The older Palette Diary post v5 shortcut still works on the old sample page, but it will not pull these images.</p>
+    </article>
+
+    <div class="actions">
+      <button type="button" class="ghost" id="save">Save photos</button>
+      <button type="button" class="ghost" id="copy">Copy caption</button>
+      <a class="btn primary" id="post" href="shortcuts://run-shortcut?name=softhaus%20post">Post</a>
     </div>
-
-    <div class="grid" id="images">
-      <a href="01.jpg" download><img src="01.jpg" alt="A calm morning living room with an oatmeal sofa and pale wood table" width="864" height="1152"></a>
-      <a href="02.jpg" download><img src="02.jpg" alt="Sofa corner in soft taupe and oatmeal linen" width="864" height="1152"></a>
-      <a href="03.jpg" download><img src="03.jpg" alt="A small desk nook in morning light" width="864" height="1152"></a>
-      <a href="04.jpg" download><img src="04.jpg" alt="Window with linen curtains and a wooden bench" width="864" height="1152"></a>
+    <div id="downloads">
+      <a href="01.jpg" download="01.jpg"><img src="01.jpg" alt="1"></a>
+      <a href="02.jpg" download="02.jpg"><img src="02.jpg" alt="2"></a>
+      <a href="03.jpg" download="03.jpg"><img src="03.jpg" alt="3"></a>
+      <a href="04.jpg" download="04.jpg"><img src="04.jpg" alt="4"></a>
     </div>
-
-    <div class="caption-box">
-      <p id="caption">Most mornings look like this in here.</p>
-      <div class="actions">
-        <button type="button" id="copy">Copy caption</button>
-        <a class="btn" id="post" href="https://x.com/intent/post?text=Most%20mornings%20look%20like%20this%20in%20here.">Post on X</a>
-      </div>
-    </div>
-
-    <p class="note"><strong>The Post button and the iPhone Shortcut cannot pick the account.</strong> X always uses whichever account is currently active in the app. Open X first and switch to @softhaus_, then come back and post. After the composer opens, paste the caption if it is not already there. The intent link also cannot attach these images. Use the Shortcut (or save the four pictures and add them yourself) for that.</p>
-
-    <h2>iPhone Shortcut</h2>
-    <p class="steps">The fastest path is the Add Shortcut button above. After it is added, open X and switch to @softhaus_, then run softhaus post v5. In the share sheet choose X, paste the caption, post, then confirm the delete prompt so the four Recents copies are removed.</p>
-    <p class="steps">If the import link does not work, you can build the same shortcut by hand in about a minute:</p>
-    <ol class="steps">
-      <li>Open Shortcuts, tap <strong>+</strong>, name it <strong>softhaus post v5</strong>.</li>
-      <li>Add <strong>Get Contents of URL</strong> for <code>https://vuolo.github.io/softhaus-queue/caption.txt</code>, then <strong>Copy to Clipboard</strong>.</li>
-      <li>Add a <strong>List</strong> of the four image URLs (<code>01.jpg</code> through <code>04.jpg</code> on this page), then <strong>Repeat with Each</strong>: Get Contents of URL, Get Images from Input, Convert Image to JPEG, Add to Variable <code>Images</code>.</li>
-      <li>After the loop, <strong>Get Variable</strong> <code>Images</code> and <strong>Save to Photo Album</strong> (Recents).</li>
-      <li>Add <strong>Get Latest Photos</strong> (4) and <strong>Set Variable</strong> <code>PhotosToDelete</code> to that result.</li>
-      <li>Add the system <strong>Share</strong> action with those photos (images only). Choose X, then paste the caption.</li>
-      <li>After Share, add <strong>Delete Photos</strong> using <code>PhotosToDelete</code>. iOS will ask you to confirm.</li>
-    </ol>
-    <p class="steps">A signed import file is at <a href="softhaus%20post%20v5.shortcut"><code>softhaus post v5.shortcut</code></a>.</p>
-
-    <footer>
-      <a href="https://vuolo.github.io/">vuolo.github.io</a>
-      · draft only, not posted yet
-    </footer>
   </div>
-  <div class="toast" id="toast" role="status">Caption copied</div>
+  <div class="toast" id="toast" role="status">Copied</div>
   <script>
-    const caption = document.getElementById("caption").textContent.trim();
+    const DEFAULT_IMAGES = ["01.jpg", "02.jpg", "03.jpg", "04.jpg"];
+    let imageUrls = DEFAULT_IMAGES.slice();
+    const captionEl = document.getElementById("caption");
     const toast = document.getElementById("toast");
-    document.getElementById("copy").addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(caption);
-        toast.textContent = "Caption copied";
-      } catch (err) {
-        toast.textContent = "Copy failed. Long-press the caption instead.";
-      }
+    const downloads = document.getElementById("downloads");
+
+    const currentCaption = () => (captionEl.textContent || "").trim();
+
+    const showToast = (msg) => {
+      toast.textContent = msg;
       toast.classList.add("show");
       setTimeout(() => toast.classList.remove("show"), 1800);
+    };
+
+    const withVersion = (url, version) => {
+      if (!version || String(url).includes("?")) return url;
+      return `${url}?v=${encodeURIComponent(version)}`;
+    };
+
+    const applyImages = (urls) => {
+      imageUrls = urls;
+      document.querySelectorAll("#images img").forEach((img, i) => {
+        if (urls[i]) img.src = urls[i];
+      });
+      document.querySelectorAll("#downloads a").forEach((a, i) => {
+        if (!urls[i]) return;
+        a.href = urls[i];
+        const img = a.querySelector("img");
+        if (img) img.src = urls[i];
+      });
+    };
+
+    const loadToday = async () => {
+      let text = "";
+      let version = "";
+      try {
+        const res = await fetch("today.json", { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          text = String(data.caption || "").trim();
+          version = String(data.version || data.v || "").trim();
+          if (Array.isArray(data.images) && data.images.length) {
+            applyImages(data.images.map((url) => withVersion(url, version)));
+          } else if (version) {
+            applyImages(DEFAULT_IMAGES.map((name) => withVersion(name, version)));
+          }
+        }
+      } catch (err) {}
+      if (!text) {
+        try {
+          const res = await fetch("caption.txt", { cache: "no-store" });
+          if (res.ok) text = (await res.text()).trim();
+        } catch (err) {}
+      }
+      if (text) captionEl.textContent = text;
+    };
+
+    document.getElementById("copy").addEventListener("click", async () => {
+      const caption = currentCaption();
+      try {
+        await navigator.clipboard.writeText(caption);
+        showToast("Copied");
+      } catch (err) {
+        showToast("Long-press the caption");
+      }
     });
+
+    document.getElementById("save").addEventListener("click", async () => {
+      try {
+        const files = await Promise.all(imageUrls.map(async (name, i) => {
+          const res = await fetch(name);
+          const filename = DEFAULT_IMAGES[i] || `0${i + 1}.jpg`;
+          const blob = await res.blob();
+          return new File([blob], filename, { type: "image/jpeg" });
+        }));
+        if (navigator.canShare && navigator.canShare({ files })) {
+          await navigator.share({ files });
+          return;
+        }
+      } catch (err) {
+        if (err && err.name === "AbortError") return;
+      }
+      for (const [i, url] of imageUrls.entries()) {
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = DEFAULT_IMAGES[i] || `0${i + 1}.jpg`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+      downloads.classList.add("show");
+    });
+
+    loadToday();
   </script>
 </body>
 </html>
