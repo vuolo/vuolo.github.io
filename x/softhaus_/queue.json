@@ -97,9 +97,9 @@
       "type": "room_mood",
       "status": "queued",
       "replaces": "w1-d1-am-v2-morning-rooms",
-      "notes": "Active first post, published to the live queue on Thu Nov 26 (America/New_York). Mike picked week1/first-post-options/ideas/post-01 (indoor pool house) to replace mon-am-v2. palette-queue remains unchanged.",
+      "notes": "Active first post, published to the live queue on Thu Nov 26 (America/New_York). Mike picked week1/first-post-options/ideas/post-01 (indoor pool house) to replace mon-am-v2. Four-image set (01\u201304) as of Fri Nov 27. palette-queue remains unchanged.",
       "caption": "would wake up and go straight in honestly",
-      "carousel": "Two stills of a house with an indoor pool: the living space and pool, and the water and travertine.",
+      "carousel": "Four stills of a house with an indoor pool: the living space, the water and travertine, a closer look out at the peak, and a lower angle along the infinity edge.",
       "images_dir": "week1/first-post-options/ideas/post-01",
       "images": [
         {
@@ -113,6 +113,18 @@
           "role": "water and travertine",
           "url": "https://vuolo.github.io/x/softhaus_/02.jpg",
           "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/first-post-options/ideas/post-01/02.jpg"
+        },
+        {
+          "file": "post-01-03.jpg",
+          "role": "closer view out the opening",
+          "url": "https://vuolo.github.io/x/softhaus_/03.jpg",
+          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/first-post-options/ideas/post-01/03.jpg"
+        },
+        {
+          "file": "post-01-04.jpg",
+          "role": "along the infinity edge",
+          "url": "https://vuolo.github.io/x/softhaus_/04.jpg",
+          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/first-post-options/ideas/post-01/04.jpg"
         }
       ]
     },

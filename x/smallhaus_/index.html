@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#000000">
+  <title>smallhaus</title>
+  <style>
+    :root {
+      --bg: #000;
+      --text: #e7e9ea;
+      --muted: #71767b;
+      --line: #2f3336;
+      --hair: #323436;
+      --blue: #1d9bf0;
+      --pill: #181818;
+      --reply: #1e1e1e;
+      --btn: #e7e9ea;
+      --btn-text: #0f1419;
+      --circle: #202327;
+      --topbar: 53px;
+      --tabs: 48px;
+      --dock: 132px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      min-height: 100%;
+      overflow: hidden;
+    }
+    body.locked { overscroll-behavior: none; }
+    button, a { font: inherit; color: inherit; }
+    img { display: block; }
+
+    /* ——— Feed chrome ——— */
+    #feed { display: flex; flex-direction: column; height: 100dvh; height: 100vh; }
+    .feed-chrome {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #000;
+      padding-top: var(--safe-top);
+      flex-shrink: 0;
+    }
+    .topbar {
+      height: var(--topbar);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 16px;
+      flex-shrink: 0;
+    }
+    .topbar .me {
+      width: 32px; height: 32px; border-radius: 50%; object-fit: cover;
+    }
+    .topbar .xlogo { width: 28px; height: 28px; justify-self: center; fill: var(--text); }
+    .topbar .add-person { width: 26px; height: 26px; justify-self: end; color: var(--text); stroke: currentColor; fill: none; }
+
+    .tabs {
+      height: var(--tabs);
+      display: flex;
+      align-items: stretch;
+      padding: 0 8px;
+      position: relative;
+      flex-shrink: 0;
+      border-bottom: 1px solid var(--hair);
+    }
+    .tabs button {
+      flex: 1;
+      background: none;
+      border: 0;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.25px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+    .tabs button.on { color: var(--text); }
+    .tabs button.on .lab {
+      position: relative;
+    }
+    .tabs button:first-child { justify-content: flex-start; padding-left: 18px; }
+    .tabs button.on .lab::after {
+      content: "";
+      position: absolute;
+      left: -2px; right: -2px; bottom: -13px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px 2px 0 0;
+    }
+    .tabs .chev { display: inline-flex; width: 10px; height: 10px; color: var(--text); }
+    .tabs .chev svg { width: 10px; height: 10px; }
+
+    .feed-scroll {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-bottom: calc(var(--dock) + var(--safe-bottom) + 16px);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Tweet row */
+    .tweet {
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr);
+      column-gap: 10px;
+      padding: 12px 16px 0 16px;
+      position: relative;
+    }
+    .tweet .avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+    .who-line {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      min-width: 0;
+      padding-right: 28px;
+      line-height: 20px;
+    }
+    .who-line .name {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      white-space: nowrap;
+    }
+    .who-line .meta {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .x-mark {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      width: 18px;
+      height: 18px;
+      fill: var(--text);
+    }
+    .tweet .caption {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 20px;
+      letter-spacing: -0.2px;
+      margin: 2px 0 0;
+    }
+
+    .media-grid {
+      display: grid;
+      gap: 2px;
+      margin: 10px 0 0;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #16181c;
+    }
+    .media-grid .slide {
+      overflow: hidden;
+      background: #16181c;
+      min-width: 0;
+      min-height: 0;
+    }
+    .media-grid .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .media-grid.n1 { grid-template-columns: 1fr; aspect-ratio: 16 / 9; }
+    .media-grid.n2 { grid-template-columns: 1fr 1fr; aspect-ratio: 2 / 1; }
+    .media-grid.n3 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      aspect-ratio: 4 / 3;
+    }
+    .media-grid.n3 .slide:first-child { grid-row: 1 / span 2; }
+    .media-grid.n4 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      aspect-ratio: 1 / 1;
+    }
+    .tweet .media-grid { margin-left: 0; }
+
+    .eng {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 32px;
+      margin: 4px 0 0;
+      padding: 0 0 10px;
+      color: var(--muted);
+    }
+    .eng span, .eng button {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: none;
+      border: 0;
+      color: var(--muted);
+      min-width: 18px;
+    }
+    .eng svg, .ico svg { width: 18.75px; height: 18.75px; fill: currentColor; display: block; }
+    .tweet-end { border-bottom: 1px solid var(--hair); height: 0; margin-top: 2px; }
+
+    /* Queue dock */
+    .dock {
+      position: fixed;
+      left: 0; right: 0;
+      bottom: 0;
+      z-index: 15;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--hair);
+      padding: 8px 16px calc(8px + var(--safe-bottom));
+    }
+    .dock .row { display: flex; gap: 8px; }
+    .dock .ghost, .dock .btn {
+      flex: 1;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #181818;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+    .dock .primary {
+      margin-top: 8px;
+      width: 100%;
+      height: 40px;
+      border-radius: 999px;
+      background: var(--btn);
+      color: var(--btn-text);
+      border: 0;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+    .dock .ghost:active, .dock .btn:active, .dock .primary:active { transform: scale(0.985); }
+    .shortcut-hint {
+      display: none;
+      margin-top: 8px;
+      text-align: center;
+      font-size: 12px;
+      line-height: 16px;
+      color: var(--muted);
+    }
+    .shortcut-hint.show { display: block; }
+    .shortcut-hint a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+
+
+    /* ——— Detail ——— */
+    #detail {
+      display: none;
+      flex-direction: column;
+      height: 100dvh; height: 100vh;
+      background: #000;
+    }
+    body.show-detail #feed { display: none; }
+    body.show-detail #detail { display: flex; }
+    body.show-detail .dock, body.show-viewer .dock { display: none; }
+    body.show-viewer #feed, body.show-viewer #detail { display: none; }
+    body.show-viewer #viewer { display: flex; }
+
+    .detail-bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #000;
+      padding-top: var(--safe-top);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      min-height: calc(53px + var(--safe-top));
+      padding-left: 4px;
+      padding-right: 8px;
+      padding-bottom: 0;
+      flex-shrink: 0;
+    }
+    .detail-bar .icon-btn {
+      width: 44px; height: 44px;
+      background: none; border: 0;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .detail-bar .icon-btn svg { width: 22px; height: 22px; }
+    .detail-title {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      text-align: center;
+    }
+    .detail-bar .right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+    .detail-bar .right button { width: 40px; height: 44px; background: none; border: 0; color: var(--text); display: flex; align-items: center; justify-content: center; }
+    .detail-bar .right svg { width: 22px; height: 22px; fill: currentColor; }
+
+    .detail-body {
+      flex: 1;
+      overflow-y: auto;
+      padding-bottom: 8px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .detail-who {
+      display: flex;
+      align-items: center;
+      padding: 8px 16px 0;
+      gap: 10px;
+    }
+    .detail-who .avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+    .detail-names { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+    .detail-names .name { font-size: 15px; font-weight: 700; line-height: 18px; letter-spacing: -0.2px; }
+    .detail-names .meta { font-size: 15px; font-weight: 400; color: var(--muted); line-height: 18px; }
+    .xcom {
+      margin-left: auto;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      display: flex;
+      align-items: baseline;
+      line-height: 1;
+      padding-top: 2px;
+    }
+    .xcom svg { width: 20px; height: 20px; fill: var(--text); position: relative; top: 2px; }
+    .xcom span { font-size: 20px; font-weight: 700; letter-spacing: -0.8px; }
+    .detail-body > .caption {
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 22px;
+      letter-spacing: -0.2px;
+      padding: 12px 16px 14px;
+    }
+    #images-detail {
+      margin: 0 16px;
+    }
+    .stamp {
+      font-size: 15px;
+      color: var(--muted);
+      padding: 12px 16px 0;
+      letter-spacing: -0.2px;
+    }
+    .stamp strong { color: var(--text); font-weight: 700; }
+    .detail-eng {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px 10px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--hair);
+    }
+    .detail-eng svg { width: 18.75px; height: 18.75px; fill: currentColor; }
+    .relrow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .relrow { gap: 8px; }
+    .relrow > span { display: inline-flex; align-items: center; gap: 4px; }
+    .relrow .chev { display: inline-flex; }
+
+    /* ——— Viewer ——— */
+    #viewer {
+      display: none;
+      flex-direction: column;
+      height: 100dvh; height: 100vh;
+      background: #000;
+      position: relative;
+    }
+    .viewer-top {
+      flex-shrink: 0;
+      height: calc(60px + var(--safe-top));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--safe-top) 16px 0;
+      z-index: 5;
+    }
+    .round-btn {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: #202327;
+      border: 0;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .round-btn svg { width: 20px; height: 20px; fill: #fff; }
+
+    .viewer-stage {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 4px 0;
+    }
+    .viewer-track {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.25s ease;
+    }
+    .viewer-track.dragging { transition: none; }
+    .viewer-track .vslide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .viewer-track img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .viewer-bottom {
+      flex-shrink: 0;
+      padding: 0 16px 12px;
+      background: #000;
+    }
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      padding: 8px 0 10px;
+    }
+    .dots i {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #3a3a3a;
+      display: block;
+    }
+    .dots i.on { background: #fff; }
+    .v-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 0 8px;
+    }
+    .v-author .avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+    .v-author .names { flex: 1; min-width: 0; }
+    .v-author .name { font-size: 15px; font-weight: 700; line-height: 18px; }
+    .v-author .meta { font-size: 15px; color: var(--muted); line-height: 18px; }
+    .follow {
+      background: #fff;
+      color: #0f1419;
+      border: 0;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 6px 16px;
+      line-height: 20px;
+    }
+    .v-caption {
+      font-size: 15px;
+      line-height: 20px;
+      padding: 0 0 12px;
+    }
+    .vpills {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 0 12px;
+    }
+    .vpills span {
+      flex: 1;
+      height: 40px;
+      border-radius: 999px;
+      background: #181818;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .vpills span.narrow { flex: 0 0 48px; }
+    .vpills svg { width: 18.75px; height: 18.75px; fill: currentColor; }
+    .reply-pill {
+      height: 44px;
+      border-radius: 999px;
+      background: #1e1e1e;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 20px;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(var(--dock) + var(--safe-bottom) + 16px);
+      transform: translateX(-50%) translateY(12px);
+      background: #e7e9ea;
+      color: #0f1419;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 16px;
+      border-radius: 999px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 40;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    #downloads { display: none; }
+    #downloads.show { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px 16px 16px; }
+    #downloads img { width: 100%; border-radius: 8px; }
+
+  </style>
+</head>
+<body>
+  <div id="feed">
+    <div class="feed-chrome">
+    <div class="topbar">
+      <img class="me" src="avatar.jpg" alt="">
+      <svg class="xlogo" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      <svg class="add-person" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7.5" r="3.2"/><path d="M3.8 18.5c0-2.7 2.2-4.7 5.2-4.7s5.2 2 5.2 4.7"/><path d="M17 8.5v6M14 11.5h6"/></svg>
+    </div>
+    <div class="tabs">
+      <button type="button" class="on"><span class="lab">For you</span> <span class="chev"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg></span></button>
+      <button type="button">Following</button>
+      <button type="button">Add +</button>
+      <button type="button">Fashion</button>
+    </div>
+    </div>
+    <div class="feed-scroll">
+      <article class="tweet" id="card">
+        <img class="avatar" src="avatar.jpg" alt="">
+        <div class="tweet-main">
+          <div class="who-line">
+            <span class="name">smallhaus</span>
+            <span class="meta">@smallhaus_ · now</span>
+          </div>
+          <p class="caption" id="caption">Caption</p>
+          <div class="media-grid" id="images"></div>
+          <div class="eng" aria-hidden="true">
+            <span class="i-reply"></span>
+            <span class="i-repost"></span>
+            <span class="i-like"></span>
+            <span class="i-views"></span>
+            <span class="i-bookmark"></span>
+            <span class="i-share"></span>
+          </div>
+        </div>
+        <svg class="x-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </article>
+      <div class="tweet-end"></div>
+      <div id="downloads"></div>
+    </div>
+  </div>
+
+  <div class="dock" id="dock">
+    <div class="row">
+      <button type="button" class="ghost" id="save">Save photos</button>
+      <button type="button" class="ghost" id="copy">Copy caption</button>
+    </div>
+    <a class="primary" id="post" href="shortcuts://run-shortcut?name=smallhaus%20post">Post</a>
+    <p class="shortcut-hint" id="shortcut-hint">
+      <a id="get-shortcut" href="https://vuolo.github.io/x/smallhaus_/smallhaus%20post.shortcut" target="_blank" rel="noopener">shortcut not running? get it</a>
+    </p>
+  </div>
+
+  <div id="detail">
+    <div class="detail-bar">
+      <button type="button" class="icon-btn" id="detail-back" aria-label="Back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5L7 12l8 7"/></svg>
+      </button>
+      <div class="detail-title">Post</div>
+      <div class="right">
+        <button type="button" aria-label="Grok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.15 16.55 A6.55 6.55 0 1 1 17.85 7.45" fill="none" stroke="currentColor" stroke-width="2.35" stroke-linecap="butt"/><path d="M7.45 17.85 A6.55 6.55 0 1 1 16.55 6.15" fill="none" stroke="currentColor" stroke-width="2.35" stroke-linecap="butt"/><path d="M5.1 19.15 L6.35 19.85 L18.9 4.85 L17.65 4.15 Z" fill="currentColor"/></svg></button>
+        <button type="button" aria-label="More"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-who">
+        <img class="avatar" src="avatar.jpg" alt="">
+        <div class="detail-names">
+          <span class="name">smallhaus</span>
+          <span class="meta">@smallhaus_</span>
+        </div>
+        <div class="xcom">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><span>.com</span>
+        </div>
+      </div>
+      <p class="caption" id="caption-detail">Caption</p>
+      <div class="media-grid" id="images-detail"></div>
+      <p class="stamp" id="stamp">12:00 AM · 11/27/26 · <strong>0</strong> Views</p>
+      <div class="detail-eng" aria-hidden="true">
+        <span class="i-reply"></span>
+        <span class="i-repost"></span>
+        <span class="i-like"></span>
+        <span class="i-bookmark"></span>
+        <span class="i-share"></span>
+      </div>
+      <div class="relrow">
+        <span>Relevant <span class="chev"><svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg></span></span>
+        <span>View quotes <span class="chev"><svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2.5L8.5 6 4 9.5"/></svg></span></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="viewer">
+    <div class="viewer-top">
+      <button type="button" class="round-btn" id="viewer-close" aria-label="Back">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.414l4.293-4.293-1.414-1.414L3.586 12l6.707 6.707 1.414-1.414L7.414 13H20z"/></svg>
+      </button>
+      <button type="button" class="round-btn" id="viewer-more" aria-label="More">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+      </button>
+    </div>
+    <div class="viewer-stage">
+      <div class="viewer-track" id="viewer-track"></div>
+    </div>
+    <div class="viewer-bottom" id="viewer-bottom">
+      <div class="dots" id="viewer-dots"></div>
+      <div class="v-author">
+        <img class="avatar" src="avatar.jpg" alt="">
+        <div class="names">
+          <div class="name">smallhaus</div>
+          <div class="meta">@smallhaus_</div>
+        </div>
+        <button type="button" class="follow">Follow</button>
+      </div>
+      <p class="v-caption" id="caption-viewer">Caption</p>
+      <div class="vpills" aria-hidden="true">
+        <span class="i-reply"></span>
+        <span class="i-repost"></span>
+        <span class="i-like"></span>
+        <span class="i-bookmark narrow"></span>
+        <span class="i-share narrow"></span>
+      </div>
+      <div class="reply-pill">Post your reply</div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>
+    const ICONS = {
+      reply: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 4.49-3.64 8.13-8.13 8.13H8.754l-4.071 3.405c-.395.33-.948.034-.948-.415V18.16C2.49 16.32 1.75 13.3 1.75 10zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.037.75 5.463 2.047 6.99.13.156.2.36.2.566v1.816l2.664-2.228a.75.75 0 01.486-.163h4.366c3.317 0 6.13-2.813 6.13-6.13C19.379 6.813 16.566 4 13.249 4H9.756z"/></svg>',
+      repost: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.75 3.79l4.603 4.3-1.706 1.82L6 8.32v7.43c0 .794.63 1.45 1.45 1.45H13a.75.75 0 010 1.5H7.45c-1.65 0-2.95-1.3-2.95-2.95V8.32l-1.647 1.57-1.706-1.82L4.75 3.79zM19.25 20.21l-4.603-4.3 1.706-1.82L18 15.68V8.25c0-.794-.63-1.45-1.45-1.45H11a.75.75 0 010-1.5h5.55c1.65 0 2.95 1.3 2.95 2.95v7.43l1.647-1.57 1.706 1.82-4.603 4.3z"/></svg>',
+      like: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M16.697 5.5c-1.222-.06-2.679.51-3.697 2.19-1.018-1.68-2.475-2.25-3.697-2.19-1.543.07-3.303 1.49-3.303 3.95 0 4.09 5.01 8.1 6.5 9.4.4.3.8.3 1.2 0 1.49-1.3 6.5-5.31 6.5-9.4 0-2.46-1.76-3.88-3.303-3.95zm-7.398 3.75c0-1.232.89-2.05 1.947-2.1.78-.04 1.687.385 2.495 1.56l.454.63.454-.63c.807-1.175 1.714-1.6 2.495-1.56 1.056.05 1.946.868 1.946 2.1 0 2.72-3.27 5.86-5.395 7.41-2.126-1.55-5.396-4.69-5.396-7.41z"/></svg>',
+      views: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21l.004-10h2L6 21H4zm9.248 0v-7h2v7h-2z"/></svg>',
+      bookmark: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"/></svg>',
+      share: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.59l5.7 5.7-1.41 1.42L13 6.41V16h-2V6.41l-3.3 3.3-1.41-1.42L12 2.59zM21 15l-.02 3.51c0 1.38-1.12 2.49-2.5 2.49H5.5C4.11 21 3 19.88 3 18.5V15h2v3.5c0 .28.22.5.5.5h12.98c.28 0 .5-.22.5-.5L19 15h2z"/></svg>'
+    };
+    document.querySelectorAll(".i-reply").forEach((el) => { el.innerHTML = ICONS.reply; });
+    document.querySelectorAll(".i-repost").forEach((el) => { el.innerHTML = ICONS.repost; });
+    document.querySelectorAll(".i-like").forEach((el) => { el.innerHTML = ICONS.like; });
+    document.querySelectorAll(".i-views").forEach((el) => { el.innerHTML = ICONS.views; });
+    document.querySelectorAll(".i-bookmark").forEach((el) => { el.innerHTML = ICONS.bookmark; });
+    document.querySelectorAll(".i-share").forEach((el) => { el.innerHTML = ICONS.share; });
+
+    const fileName = (url, i) => {
+      const base = String(url || "").split("?")[0].split("/").pop();
+      return base || `0${i + 1}.jpg`;
+    };
+
+    let imageUrls = [];
+    let mediaIndex = 0;
+    const captionEl = document.getElementById("caption");
+    const captionDetail = document.getElementById("caption-detail");
+    const captionViewer = document.getElementById("caption-viewer");
+    const toast = document.getElementById("toast");
+    const downloads = document.getElementById("downloads");
+    const stampEl = document.getElementById("stamp");
+    const viewer = document.getElementById("viewer");
+    const track = document.getElementById("viewer-track");
+    const dotsEl = document.getElementById("viewer-dots");
+    const feedGrid = document.getElementById("images");
+    const detailGrid = document.getElementById("images-detail");
+
+    const currentCaption = () => (captionEl.textContent || "").trim();
+
+    const showToast = (msg) => {
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1800);
+    };
+
+    const withVersion = (url, version) => {
+      if (!version || String(url).includes("?")) return url;
+      return `${url}?v=${encodeURIComponent(version)}`;
+    };
+
+    const applyImages = (urls) => {
+      imageUrls = (urls || []).filter(Boolean).slice(0, 4);
+      const n = imageUrls.length;
+      const cls = `media-grid n${n || 1}`;
+      const slideHtml = imageUrls.map((url, i) =>
+        `<div class="slide"><img src="${url}" alt="" data-i="${i}"></div>`
+      ).join("");
+      feedGrid.className = cls;
+      detailGrid.className = cls;
+      feedGrid.innerHTML = slideHtml;
+      detailGrid.innerHTML = slideHtml;
+      track.innerHTML = imageUrls.map((url) =>
+        `<div class="vslide"><img src="${url}" alt=""></div>`
+      ).join("");
+      dotsEl.innerHTML = imageUrls.map((_, i) =>
+        `<i${i === mediaIndex ? ' class="on"' : ""}></i>`
+      ).join("");
+      downloads.innerHTML = imageUrls.map((url, i) => {
+        const name = fileName(url, i);
+        return `<a href="${url}" download="${name}"><img src="${url}" alt="${i + 1}"></a>`;
+      }).join("");
+    };
+
+    const setCaption = (text) => {
+      const trimmed = String(text || "").trim();
+      if (!trimmed) return;
+      captionEl.textContent = trimmed;
+      captionDetail.textContent = trimmed;
+      captionViewer.textContent = trimmed;
+    };
+
+    const setStamp = (dateStr) => {
+      stampEl.innerHTML = "12:00 AM · 11/27/26 · <strong>0</strong> Views";
+    };
+
+    const loadToday = async () => {
+      let text = "";
+      let version = "";
+      let urls = [];
+      try {
+        const res = await fetch("today.json", { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          text = String(data.caption || "").trim();
+          version = String(data.version || data.v || "").trim();
+          setStamp(data.date);
+          if (Array.isArray(data.images) && data.images.length) {
+            urls = data.images.map((url) => withVersion(url, version));
+          }
+        }
+      } catch (err) {}
+      if (!urls.length) {
+        try {
+          const res = await fetch("images.txt", { cache: "no-store" });
+          if (res.ok) {
+            urls = (await res.text()).split(/\r?\n/).map((s) => s.trim()).filter(Boolean)
+              .map((url) => withVersion(url, version));
+          }
+        } catch (err) {}
+      }
+      if (urls.length) applyImages(urls);
+      if (!text) {
+        try {
+          const res = await fetch("caption.txt", { cache: "no-store" });
+          if (res.ok) text = (await res.text()).trim();
+        } catch (err) {}
+      }
+      setCaption(text);
+    };
+
+    const cleanUrl = () => location.pathname + location.search;
+
+    const parseRoute = () => {
+      const s = history.state;
+      if (s && (s.view === "post" || s.view === "media")) {
+        const max = Math.max(0, imageUrls.length - 1);
+        return { view: s.view, index: Math.max(0, Math.min(max, Number(s.index) || 0)) };
+      }
+      return { view: "queue", index: 0 };
+    };
+
+    const paintMedia = (index, dx = 0, dragging = false) => {
+      const max = Math.max(0, imageUrls.length - 1);
+      mediaIndex = Math.max(0, Math.min(max, index));
+      track.classList.toggle("dragging", dragging);
+      const width = viewer.clientWidth || window.innerWidth;
+      track.style.transform = `translateX(${-mediaIndex * width + dx}px)`;
+      [...dotsEl.querySelectorAll("i")].forEach((dot, i) => dot.classList.toggle("on", i === mediaIndex));
+    };
+
+    const render = () => {
+      const route = parseRoute();
+      document.body.classList.toggle("show-detail", route.view === "post");
+      document.body.classList.toggle("show-viewer", route.view === "media");
+      document.body.classList.toggle("locked", route.view !== "queue");
+      if (route.view === "media") paintMedia(route.index);
+    };
+
+    const go = (view, index) => {
+      const state = { view: view || "queue", index: index || 0 };
+      const current = history.state || {};
+      if (current.view === state.view && (state.view !== "media" || current.index === state.index)) {
+        render();
+        return;
+      }
+      history.pushState(state, "", cleanUrl());
+      render();
+    };
+
+    const back = () => {
+      if (history.state && history.state.view && history.state.view !== "queue") {
+        history.back();
+        return;
+      }
+      history.replaceState({ view: "queue" }, "", cleanUrl());
+      render();
+    };
+
+    document.getElementById("card").addEventListener("click", (e) => {
+      if (e.target.closest(".eng")) return;
+      go("post");
+    });
+    document.getElementById("detail-back").addEventListener("click", (e) => {
+      e.preventDefault();
+      back();
+    });
+    document.getElementById("viewer-close").addEventListener("click", (e) => {
+      e.preventDefault();
+      back();
+    });
+
+    document.getElementById("images-detail").addEventListener("click", (e) => {
+      const img = e.target.closest("img[data-i]");
+      if (!img) return;
+      e.preventDefault();
+      e.stopPropagation();
+      go("media", Number(img.dataset.i));
+    });
+
+    document.getElementById("copy").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(currentCaption());
+        showToast("Copied");
+      } catch (err) {
+        showToast("Long-press the caption");
+      }
+    });
+
+    document.getElementById("save").addEventListener("click", async () => {
+      try {
+        const files = await Promise.all(imageUrls.map(async (url, i) => {
+          const res = await fetch(url);
+          const filename = fileName(url, i);
+          const blob = await res.blob();
+          return new File([blob], filename, { type: "image/jpeg" });
+        }));
+        if (navigator.canShare && navigator.canShare({ files })) {
+          await navigator.share({ files });
+          return;
+        }
+      } catch (err) {
+        if (err && err.name === "AbortError") return;
+      }
+      for (const [i, url] of imageUrls.entries()) {
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName(url, i);
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+      downloads.classList.add("show");
+    });
+
+    const HINT_KEY = "xQueuePostTap:smallhaus_";
+    const HINT_MS = 2 * 60 * 1000;
+    const shortcutHint = document.getElementById("shortcut-hint");
+    const markPostTap = () => {
+      const ts = String(Date.now());
+      try { sessionStorage.setItem(HINT_KEY, ts); } catch (err) {}
+      try { localStorage.setItem(HINT_KEY, ts); } catch (err) {}
+    };
+    const maybeShowShortcutHint = () => {
+      let ts = 0;
+      try { ts = Number(sessionStorage.getItem(HINT_KEY) || localStorage.getItem(HINT_KEY) || 0); } catch (err) {}
+      if (ts && Date.now() - ts < HINT_MS) shortcutHint.classList.add("show");
+    };
+    document.getElementById("post").addEventListener("click", markPostTap);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") maybeShowShortcutHint();
+    });
+    window.addEventListener("pageshow", maybeShowShortcutHint);
+
+    let startX = 0, startY = 0, lastX = 0, lastY = 0, axis = null, swiping = false;
+    const startAt = (x, y) => {
+      startX = lastX = x;
+      startY = lastY = y;
+      axis = null;
+      swiping = true;
+    };
+    const moveAt = (x, y, e) => {
+      if (!swiping) return;
+      const dx = x - startX;
+      const dy = y - startY;
+      if (!axis) {
+        if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+        axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+      }
+      if (axis !== "x") return;
+      if (e && e.cancelable) e.preventDefault();
+      lastX = x;
+      lastY = y;
+      const atStart = mediaIndex === 0 && dx > 0;
+      const atEnd = mediaIndex === imageUrls.length - 1 && dx < 0;
+      const resist = atStart || atEnd ? 0.35 : 1;
+      paintMedia(mediaIndex, dx * resist, true);
+    };
+    const endAt = () => {
+      if (!swiping) return;
+      swiping = false;
+      const dx = lastX - startX;
+      if (axis === "x" && Math.abs(dx) > 40) {
+        paintMedia(mediaIndex + (dx < 0 ? 1 : -1));
+        history.replaceState({ view: "media", index: mediaIndex }, "", cleanUrl());
+      } else {
+        paintMedia(mediaIndex);
+      }
+      axis = null;
+    };
+
+    viewer.addEventListener("touchstart", (e) => {
+      if (e.target.closest(".round-btn") || e.target.closest(".viewer-bottom")) return;
+      const t = e.changedTouches[0];
+      startAt(t.clientX, t.clientY);
+    }, { passive: true });
+    viewer.addEventListener("touchmove", (e) => {
+      const t = e.changedTouches[0];
+      moveAt(t.clientX, t.clientY, e);
+    }, { passive: false });
+    viewer.addEventListener("touchend", endAt);
+    viewer.addEventListener("touchcancel", endAt);
+    viewer.addEventListener("mousedown", (e) => {
+      if (e.target.closest(".round-btn") || e.target.closest(".viewer-bottom")) return;
+      startAt(e.clientX, e.clientY);
+    });
+    window.addEventListener("mousemove", (e) => { if (swiping) moveAt(e.clientX, e.clientY, e); });
+    window.addEventListener("mouseup", endAt);
+    window.addEventListener("keydown", (e) => {
+      if (!document.body.classList.contains("show-viewer")) {
+        if (e.key === "Escape" && document.body.classList.contains("show-detail")) back();
+        return;
+      }
+      if (e.key === "Escape") back();
+      if (e.key === "ArrowLeft") {
+        paintMedia(mediaIndex - 1);
+        history.replaceState({ view: "media", index: mediaIndex }, "", cleanUrl());
+      }
+      if (e.key === "ArrowRight") {
+        paintMedia(mediaIndex + 1);
+        history.replaceState({ view: "media", index: mediaIndex }, "", cleanUrl());
+      }
+    });
+    window.addEventListener("popstate", render);
+    window.addEventListener("resize", () => {
+      if (document.body.classList.contains("show-viewer")) paintMedia(mediaIndex);
+    });
+
+    // Refresh or a pasted #post / #media link always lands on the queue.
+    // In-session pushState keeps a clean URL so the address bar never changes;
+    // history.state still powers detail/viewer so iOS back-swipe works.
+    history.replaceState({ view: "queue" }, "", cleanUrl());
+    render();
+    loadToday();
+    maybeShowShortcutHint();
+  </script>
+</body>
+</html>
