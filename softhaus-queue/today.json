@@ -3,10 +3,10 @@
   "id": "first-post-01-pool-house",
   "caption": "a pool in the middle of the house.",
   "images": [
-    "https://vuolo.github.io/softhaus-queue/01.jpg",
-    "https://vuolo.github.io/softhaus-queue/02.jpg",
-    "https://vuolo.github.io/softhaus-queue/03.jpg",
-    "https://vuolo.github.io/softhaus-queue/04.jpg"
+    "https://vuolo.github.io/softhaus-queue/01.jpg?v=20261126-2358",
+    "https://vuolo.github.io/softhaus-queue/02.jpg?v=20261126-2358",
+    "https://vuolo.github.io/softhaus-queue/03.jpg?v=20261126-2358",
+    "https://vuolo.github.io/softhaus-queue/04.jpg?v=20261126-2358"
   ],
   "caption_url": "https://vuolo.github.io/softhaus-queue/caption.txt",
   "shortcut_url": "https://vuolo.github.io/softhaus-queue/softhaus%20post%20v5.shortcut",
@@ -18,5 +18,6 @@
   "account": "softhaus",
   "handle": "softhaus_",
   "queue_url": "https://vuolo.github.io/softhaus-queue/queue.json",
-  "notes": "Active first post (ideas/post-01, indoor pool house). Replaces mon-am-v2. palette-queue remains unchanged so the older Palette Diary shortcut still works."
+  "notes": "Active first post (ideas/post-01, indoor pool house). Replaces mon-am-v2. palette-queue remains unchanged so the older Palette Diary shortcut still works.",
+  "version": "20261126-2358"
 }
