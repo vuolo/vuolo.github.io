@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Palette Diary queue</title>
+  <style>
+    @font-face {
+      font-family: Fraunces;
+      src: url("/fonts/fraunces.woff2") format("woff2");
+      font-weight: 500 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: Figtree;
+      src: url("/fonts/figtree.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: Figtree;
+      src: url("/fonts/figtree-semibold.woff2") format("woff2");
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    :root {
+      --ink: #1c1916;
+      --paper: #f4efe6;
+      --paper-deep: #e8e0d4;
+      --canal: #243140;
+      --terracotta: #a34a32;
+      --muted: #534e46;
+      --rule: #d4cbbe;
+      --white: #fffdf8;
+      --serif: Fraunces, "Iowan Old Style", Palatino, serif;
+      --sans: Figtree, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: var(--sans);
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { width: min(44rem, 100%); margin: 0 auto; padding: 1.25rem 1.15rem 3rem; }
+    header { margin-bottom: 1.4rem; }
+    .kicker {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.35rem;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: clamp(1.8rem, 5vw, 2.4rem);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin: 0 0 0.5rem;
+    }
+    .lede { color: var(--muted); margin: 0; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin: 1.4rem 0 1.2rem;
+    }
+    .grid a { display: block; }
+    .grid img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 0.7rem;
+      background: var(--paper-deep);
+    }
+    .caption-box {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-radius: 0.8rem;
+      padding: 1rem 1.05rem;
+    }
+    .caption-box p {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      margin: 0 0 0.85rem;
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    button, .btn {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      padding: 0.7rem 1.15rem;
+      font: 600 0.95rem var(--sans);
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    button {
+      background: var(--canal);
+      color: var(--white);
+    }
+    button:hover { filter: brightness(1.08); }
+    .btn {
+      background: var(--terracotta);
+      color: var(--white);
+    }
+    .btn:hover { filter: brightness(1.05); color: var(--white); }
+    .note, .steps {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .note {
+      background: var(--paper-deep);
+      border-radius: 0.8rem;
+      padding: 0.9rem 1rem;
+      margin: 1.1rem 0;
+    }
+    .note strong { color: var(--ink); }
+    h2 {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin: 1.8rem 0 0.6rem;
+    }
+    ol { padding-left: 1.2rem; margin: 0.4rem 0 1rem; }
+    li { margin: 0.45rem 0; }
+    code, .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.86em;
+      background: var(--white);
+      padding: 0.05em 0.3em;
+      border-radius: 0.25rem;
+    }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 1.2rem;
+      transform: translateX(-50%) translateY(120%);
+      background: var(--canal);
+      color: var(--white);
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    footer { margin-top: 2rem; color: var(--muted); font-size: 0.88rem; }
+    footer a { color: inherit; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="kicker">Palette Diary</p>
+      <h1>Today's queue</h1>
+      <p class="lede">A sample post, ready for you to share from your phone. The bot drafted it. You post it.</p>
+    </header>
+
+    <div class="grid" id="images">
+      <a href="01-swatches.jpg" download><img src="01-swatches.jpg" alt="Palette swatches: pine, cream, rust, and warm oak" width="1600" height="2000"></a>
+      <a href="02-room-mood.jpg" download><img src="02-room-mood.jpg" alt="Simple room mood using the same four colors" width="1600" height="2000"></a>
+      <a href="03-gradient.jpg" download><img src="03-gradient.jpg" alt="Soft gradient from pine into cream, rust, then oak" width="1600" height="2000"></a>
+      <a href="04-materials.jpg" download><img src="04-materials.jpg" alt="Material board for pine, cream linen, rust, and warm oak" width="1600" height="2000"></a>
+    </div>
+
+    <div class="caption-box">
+      <p id="caption">Pine, cream, rust, and warm oak.</p>
+      <div class="actions">
+        <button type="button" id="copy">Copy caption</button>
+        <a class="btn" id="post" href="https://x.com/intent/post?text=Pine%2C%20cream%2C%20rust%2C%20and%20warm%20oak.">Post on X</a>
+      </div>
+    </div>
+
+    <p class="note"><strong>The Post button and the iPhone Shortcut cannot pick the account.</strong> X always uses whichever account is currently active in the app. Open X first and switch to Palette Diary, then come back and post. After the composer opens, paste the caption if it is not already there. The intent link also cannot attach these images. Use the Shortcut (or save the four pictures and add them yourself) for that.</p>
+
+    <h2>iPhone Shortcut</h2>
+    <p class="steps">Make this once in the Shortcuts app. It reads <a href="today.json"><code>today.json</code></a>, copies the caption, downloads the four images, and opens the share sheet so you can send them to X.</p>
+    <ol class="steps">
+      <li>Open Shortcuts, tap <strong>+</strong>, name it <strong>Palette Diary post</strong>.</li>
+      <li>Add <strong>Get Contents of URL</strong>. Set the URL to <code>https://vuolo.github.io/palette-queue/today.json</code>.</li>
+      <li>Add <strong>Set Variable</strong>. Name: <code>Post</code>. Value: the URL contents (the JSON).</li>
+      <li>Add <strong>Get Dictionary Value</strong>. Key: <code>caption</code>. Dictionary: <code>Post</code>.</li>
+      <li>Add <strong>Copy to Clipboard</strong>. Input: that caption value.</li>
+      <li>Add <strong>Get Dictionary Value</strong>. Key: <code>images</code>. Dictionary: <code>Post</code>.</li>
+      <li>Add <strong>Repeat with Each</strong> on the images list.
+        <ol>
+          <li>Inside the loop, add <strong>Get Contents of URL</strong>. URL: <em>Repeat Item</em>.</li>
+        </ol>
+      </li>
+      <li>After the loop, add <strong>Share</strong>. Input: <em>Repeat Results</em> (the four images). When the sheet opens, choose <strong>X</strong>.</li>
+      <li>Optional: add a <strong>Show Notification</strong> that says "Caption is on your clipboard. Paste it, and make sure Palette Diary is the active account."</li>
+    </ol>
+    <p class="steps">If Get Contents of URL returns text instead of a dictionary, add <strong>Get Dictionary from Input</strong> after step 2, then use that dictionary as <code>Post</code>.</p>
+    <p class="steps">A signed <code>.shortcut</code> file is not included. Apple signs those on a Mac or iPhone, and an unsigned file usually will not import.</p>
+
+    <footer>
+      <a href="https://vuolo.github.io/">vuolo.github.io</a>
+      · draft only, not posted yet
+    </footer>
+  </div>
+  <div class="toast" id="toast" role="status">Caption copied</div>
+  <script>
+    const caption = document.getElementById("caption").textContent.trim();
+    const toast = document.getElementById("toast");
+    document.getElementById("copy").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(caption);
+        toast.textContent = "Caption copied";
+      } catch (err) {
+        toast.textContent = "Copy failed. Long-press the caption instead.";
+      }
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1800);
+    });
+  </script>
+</body>
+</html>
