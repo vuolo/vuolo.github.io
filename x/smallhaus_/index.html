@@ -891,23 +891,57 @@
     });
 
     const HINT_KEY = "xQueuePostTap:smallhaus_";
-    const HINT_MS = 2 * 60 * 1000;
+    const HINT_MS = 90 * 1000;
     const shortcutHint = document.getElementById("shortcut-hint");
+    let hintHideTimer = 0;
+    const clearHintState = () => {
+      try { sessionStorage.removeItem(HINT_KEY); } catch (err) {}
+      try { localStorage.removeItem(HINT_KEY); } catch (err) {}
+      shortcutHint.classList.remove("show");
+      if (hintHideTimer) {
+        clearTimeout(hintHideTimer);
+        hintHideTimer = 0;
+      }
+    };
+    const isReloadNavigation = () => {
+      try {
+        const nav = performance.getEntriesByType("navigation")[0];
+        return !!(nav && nav.type === "reload");
+      } catch (err) {
+        return false;
+      }
+    };
     const markPostTap = () => {
-      const ts = String(Date.now());
-      try { sessionStorage.setItem(HINT_KEY, ts); } catch (err) {}
-      try { localStorage.setItem(HINT_KEY, ts); } catch (err) {}
+      try { sessionStorage.setItem(HINT_KEY, String(Date.now())); } catch (err) {}
     };
     const maybeShowShortcutHint = () => {
       let ts = 0;
-      try { ts = Number(sessionStorage.getItem(HINT_KEY) || localStorage.getItem(HINT_KEY) || 0); } catch (err) {}
-      if (ts && Date.now() - ts < HINT_MS) shortcutHint.classList.add("show");
+      try { ts = Number(sessionStorage.getItem(HINT_KEY) || 0); } catch (err) {}
+      const remaining = ts ? HINT_MS - (Date.now() - ts) : 0;
+      if (remaining > 0) {
+        shortcutHint.classList.add("show");
+        if (hintHideTimer) clearTimeout(hintHideTimer);
+        hintHideTimer = setTimeout(() => {
+          shortcutHint.classList.remove("show");
+          try { sessionStorage.removeItem(HINT_KEY); } catch (err) {}
+          hintHideTimer = 0;
+        }, remaining);
+      } else {
+        shortcutHint.classList.remove("show");
+        if (ts) {
+          try { sessionStorage.removeItem(HINT_KEY); } catch (err) {}
+        }
+      }
     };
     document.getElementById("post").addEventListener("click", markPostTap);
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "visible") maybeShowShortcutHint();
     });
-    window.addEventListener("pageshow", maybeShowShortcutHint);
+    // Load or reload always lands on a clean feed: drop any stored tap and keep the hint hidden.
+    // Show the hint only when the page becomes visible again within HINT_MS of an in-page Post tap.
+    window.addEventListener("pageshow", (event) => {
+      if (!event.persisted || isReloadNavigation()) clearHintState();
+    });
 
     let startX = 0, startY = 0, lastX = 0, lastY = 0, axis = null, swiping = false;
     const startAt = (x, y) => {
@@ -989,7 +1023,7 @@
     history.replaceState({ view: "queue" }, "", cleanUrl());
     render();
     loadToday();
-    maybeShowShortcutHint();
+    clearHintState();
   </script>
 </body>
 </html>
