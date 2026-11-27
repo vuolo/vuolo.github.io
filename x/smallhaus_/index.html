@@ -545,7 +545,7 @@
   <div id="feed">
     <div class="feed-chrome">
     <div class="topbar">
-      <img class="me" src="https://unavatar.io/x/smallhaus_?fallback=https%3A%2F%2Fvuolo.github.io%2Fx%2Fsmallhaus_%2Favatar.jpg" alt="" onerror="this.onerror=null;this.src='avatar.jpg'">
+      <img class="me" src="avatar.jpg?v=20261127-1155" alt="" onerror="this.onerror=null;this.src='avatar.jpg'">
       <svg class="xlogo" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       <svg class="add-person" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7.5" r="3.2"/><path d="M3.8 18.5c0-2.7 2.2-4.7 5.2-4.7s5.2 2 5.2 4.7"/><path d="M17 8.5v6M14 11.5h6"/></svg>
     </div>
@@ -558,7 +558,7 @@
     </div>
     <div class="feed-scroll">
       <article class="tweet" id="card">
-        <img class="avatar" src="https://unavatar.io/x/smallhaus_?fallback=https%3A%2F%2Fvuolo.github.io%2Fx%2Fsmallhaus_%2Favatar.jpg" alt="" onerror="this.onerror=null;this.src='avatar.jpg'">
+        <img class="avatar" src="avatar.jpg?v=20261127-1155" alt="" onerror="this.onerror=null;this.src='avatar.jpg'">
         <div class="tweet-main">
           <div class="who-line">
             <span class="name">smallhaus</span>
@@ -606,7 +606,7 @@
     </div>
     <div class="detail-body">
       <div class="detail-who">
-        <img class="avatar" src="https://unavatar.io/x/smallhaus_?fallback=https%3A%2F%2Fvuolo.github.io%2Fx%2Fsmallhaus_%2Favatar.jpg" alt="" onerror="this.onerror=null;this.src='avatar.jpg'">
+        <img class="avatar" src="avatar.jpg?v=20261127-1155" alt="" onerror="this.onerror=null;this.src='avatar.jpg'">
         <div class="detail-names">
           <span class="name">smallhaus</span>
           <span class="meta">@smallhaus_</span>
@@ -647,7 +647,7 @@
     <div class="viewer-bottom" id="viewer-bottom">
       <div class="dots" id="viewer-dots"></div>
       <div class="v-author">
-        <img class="avatar" src="https://unavatar.io/x/smallhaus_?fallback=https%3A%2F%2Fvuolo.github.io%2Fx%2Fsmallhaus_%2Favatar.jpg" alt="" onerror="this.onerror=null;this.src='avatar.jpg'">
+        <img class="avatar" src="avatar.jpg?v=20261127-1155" alt="" onerror="this.onerror=null;this.src='avatar.jpg'">
         <div class="names">
           <div class="name">smallhaus</div>
           <div class="meta">@smallhaus_</div>
@@ -1020,10 +1020,36 @@
     // Refresh or a pasted #post / #media link always lands on the queue.
     // In-session pushState keeps a clean URL so the address bar never changes;
     // history.state still powers detail/viewer so iOS back-swipe works.
+    const refreshLiveAvatar = () => {
+      // Live pfp: fxtwitter is a CORS-open, no-auth lookup of the current
+      // profile_image_url. pbs.twimg URLs change whenever the pfp changes, so
+      // a new picture shows on the next page load. unavatar's free tier cannot
+      // do this (custom ttl is paid; default cache is up to 28 days).
+      const handle = "smallhaus_";
+      const fallback = "avatar.jpg";
+      const endpoint = "https://api.fxtwitter.com/" + encodeURIComponent(handle) + "?t=" + Date.now();
+      fetch(endpoint, { cache: "no-store" })
+        .then((r) => (r.ok ? r.json() : Promise.reject()))
+        .then((data) => {
+          let url = data && data.user && data.user.avatar_url;
+          if (!url || typeof url !== "string") return;
+          url = url.replace(/_(normal|bigger|mini|200x200)(\.(jpg|jpeg|png|webp))?$/i, "_400x400$2");
+          document.querySelectorAll("img.me, img.avatar").forEach((img) => {
+            img.onerror = function () {
+              this.onerror = null;
+              this.src = fallback;
+            };
+            img.src = url;
+          });
+        })
+        .catch(() => {});
+    };
+
     history.replaceState({ view: "queue" }, "", cleanUrl());
     render();
     loadToday();
     clearHintState();
+    refreshLiveAvatar();
   </script>
 </body>
 </html>
