@@ -40,13 +40,13 @@ jobs:
                       written.append(name)
           # Old softhaus-queue payloads must not restore a working alias.
           # Leave only a redirecting index.html (maintained in the repo).
-          # After the first cleanup those files are gone from git, so later
-          # runs must not `git add` the now-missing written paths.
           sq = root / "softhaus-queue"
           removed = []
           if sq.is_dir():
               for p in sorted(sq.rglob("*")):
                   if p.is_file() and p.name != "index.html":
+                      rel = str(p.as_posix())
+                      # pathlib relative
                       rel = str(p.relative_to(root))
                       p.unlink()
                       removed.append(rel)
@@ -55,11 +55,12 @@ jobs:
               sys.exit(0)
           subprocess.check_call(["git", "config", "user.name", "github-actions[bot]"])
           subprocess.check_call(["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"])
-          unique = sorted(set(n for n in written if not n.startswith("softhaus-queue/")))
+          # Skip paths deleted by the softhaus-queue cleanup; `git add softhaus-queue` stages those removals.
+          unique = sorted(n for n in set(written) if (root / n).is_file())
           add_paths = list(unique)
-          if sq.is_dir():
+          if removed:
               add_paths.append("softhaus-queue")
-          subprocess.check_call(["git", "add", "-A", "--"] + add_paths)
+          subprocess.check_call(["git", "add", "--"] + add_paths)
           if subprocess.call(["git", "diff", "--cached", "--quiet"]) == 0:
               print("no changes")
               sys.exit(0)
