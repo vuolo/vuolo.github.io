@@ -1,7 +1,7 @@
 {
   "date": "2026-11-26",
-  "id": "w1-d1-am-v2-morning-rooms",
-  "caption": "Most mornings look like this in here.",
+  "id": "first-post-01-pool-house",
+  "caption": "a pool in the middle of the house.",
   "images": [
     "https://vuolo.github.io/softhaus-queue/01.jpg",
     "https://vuolo.github.io/softhaus-queue/02.jpg",
@@ -18,5 +18,5 @@
   "account": "softhaus",
   "handle": "softhaus_",
   "queue_url": "https://vuolo.github.io/softhaus-queue/queue.json",
-  "notes": "Active first post (week1/mon-am-v2). Mike deleted the earlier swatch post. palette-queue remains unchanged so the older Palette Diary shortcut still works."
+  "notes": "Active first post (ideas/post-01, indoor pool house). Replaces mon-am-v2. palette-queue remains unchanged so the older Palette Diary shortcut still works."
 }
