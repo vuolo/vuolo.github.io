@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-30",
-  "id": "w1-d1-am-pine-cream-palette",
-  "caption": "Pine, cream, rust, and warm oak. Starting here.",
+  "date": "2026-11-26",
+  "id": "w1-d1-am-v2-morning-rooms",
+  "caption": "Most mornings look like this in here.",
   "images": [
     "https://vuolo.github.io/softhaus-queue/01.jpg",
     "https://vuolo.github.io/softhaus-queue/02.jpg",
@@ -13,10 +13,10 @@
   "fallback_shortcut_url": "https://vuolo.github.io/palette-queue/Palette%20Diary%20post%20v5.shortcut",
   "format": "softhaus-queue/v2-multiday",
   "timezone": "America/New_York",
-  "slot": "morning",
+  "slot": "first post",
   "status": "queued",
   "account": "softhaus",
   "handle": "softhaus_",
   "queue_url": "https://vuolo.github.io/softhaus-queue/queue.json",
-  "notes": "Active post for the softhaus Shortcut. palette-queue remains unchanged so the older Palette Diary shortcut still works."
+  "notes": "Active first post (week1/mon-am-v2). Mike deleted the earlier swatch post. palette-queue remains unchanged so the older Palette Diary shortcut still works."
 }

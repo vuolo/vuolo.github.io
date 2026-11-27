@@ -12,81 +12,108 @@
   "posts": [
     {
       "id": "w1-d1-am-pine-cream-palette",
-      "date": "2026-11-27",
-      "time_et": "10:14",
+      "date": "2026-11-30",
+      "time_et": "08:12",
       "slot": "morning",
       "type": "palette_board",
-      "caption": "Pine, cream, rust, and warm oak. Starting here.",
+      "caption": "These four have been on the table for a while.",
       "carousel": "Four stills of the same palette: a raw-oak swatch board, fanned paint chips on linen, a plaster-wall color wash, and a tight materials flat lay.",
       "images": [
         {
           "file": "w1-d1-am-01.jpg",
           "role": "palette board",
           "prompt": "A raw oak board used as a color palette, photographed from slightly above on a cream linen tablecloth. Four large painted rectangles sit in a loose row: pine green, warm cream, rust, and honey oak stain. The paint edges are a little uneven, like real sample boards, with a few dry brush marks. Soft morning sidelight from the left, a faint shadow under the board, a small stack of leftover sample cards just out of sharp focus at the top. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": "https://vuolo.github.io/softhaus-queue/01.jpg",
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/mon-am/01.jpg"
+          "url": null
         },
         {
           "file": "w1-d1-am-02.jpg",
           "role": "paint chips on linen",
           "prompt": "A close, slightly overhead photograph of loose paint chips and handmade color cards fanned across heavy cream linen. The colors are pine green, warm cream, rust, and honey oak. The cards are different sizes, some with rough torn edges, no printed labels or letters. A corner of a pine table shows at the bottom. Soft daylight, shallow depth of field. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": "https://vuolo.github.io/softhaus-queue/02.jpg",
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/mon-am/02.jpg"
+          "url": null
         },
         {
           "file": "w1-d1-am-03.jpg",
           "role": "plaster color wash",
-          "prompt": "A close photograph of a hand-troweled plaster wall sample where four colors melt into each other: pine green into warm cream into rust into honey oak. The surface has real plaster ridges and a soft matte finish, like a designer\u2019s sample board leaned against a wall. Gentle natural light raking across the texture. No writing. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": "https://vuolo.github.io/softhaus-queue/03.jpg",
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/mon-am/03.jpg"
+          "prompt": "A close photograph of a hand-troweled plaster wall sample where four colors melt into each other: pine green into warm cream into rust into honey oak. The surface has real plaster ridges and a soft matte finish, like a designer’s sample board leaned against a wall. Gentle natural light raking across the texture. No writing. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
+          "url": null
         },
         {
           "file": "w1-d1-am-04.jpg",
           "role": "materials flat lay",
           "prompt": "An overhead flat lay of four real materials on a pale plaster background: a small pine offcut, a folded piece of cream linen, a broken shard of a rust clay pot, and a round slice of warm oak with visible rings. They sit close together but not perfectly arranged. Soft daylight, natural shadows, tactile and simple. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": "https://vuolo.github.io/softhaus-queue/04.jpg",
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/mon-am/04.jpg"
+          "url": null
         }
       ],
-      "status": "images_ready",
-      "images_dir": "week1/mon-am"
+      "status": "skipped",
+      "images_dir": "week1/mon-am",
+      "posted_note": "Mike posted this swatch carousel early on Thu Nov 26 (America/New_York) with the caption “Pine, cream, rust, and warm oak. Starting here.”, then deleted it. Do not repost. Replaced by w1-d1-am-v2-morning-rooms."
+    },
+    {
+      "id": "w1-d1-am-v2-morning-rooms",
+      "date": "2026-11-30",
+      "time_et": "08:12",
+      "slot": "first post",
+      "type": "room_mood",
+      "status": "queued",
+      "replaces": "w1-d1-am-pine-cream-palette",
+      "notes": "Active first post, published to the live softhaus-queue on Thu Nov 26. Fills the original Mon Nov 30 AM slot after the swatch post was deleted. Soft greige, oatmeal, taupe, and pale wood rooms, not the pine/cream/rust line.",
+      "caption": "Most mornings look like this in here.",
+      "carousel": "Four stills of a quiet morning house in soft greige, oatmeal, taupe, and pale wood: a living room, a sofa corner, a desk nook, and a window with a bench.",
+      "images": [
+        {
+          "file": "w1-d1-am-v2-01.jpg",
+          "role": "morning living room",
+          "url": "https://vuolo.github.io/softhaus-queue/01.jpg"
+        },
+        {
+          "file": "w1-d1-am-v2-02.jpg",
+          "role": "sofa corner",
+          "url": "https://vuolo.github.io/softhaus-queue/02.jpg"
+        },
+        {
+          "file": "w1-d1-am-v2-03.jpg",
+          "role": "desk nook",
+          "url": "https://vuolo.github.io/softhaus-queue/03.jpg"
+        },
+        {
+          "file": "w1-d1-am-v2-04.jpg",
+          "role": "window and bench",
+          "url": "https://vuolo.github.io/softhaus-queue/04.jpg"
+        }
+      ]
     },
     {
       "id": "w1-d1-pm-quiet-living-room",
-      "date": "2026-11-27",
+      "date": "2026-11-30",
       "time_et": "18:41",
       "slot": "evening",
       "type": "room_mood",
-      "caption": "A quiet living room in those same colors. Nothing fancy.",
+      "caption": "A quiet living room. Nothing fancy.",
       "carousel": "One small living room in pine, cream, rust, and oak: a wide late-afternoon view, the sofa corner, the window, and the coffee table.",
       "images": [
         {
           "file": "w1-d1-pm-01.jpg",
           "role": "wide living room",
           "prompt": "A small, real living room in late afternoon light. Cream plaster walls, wide oak floorboards, a simple cream sofa with one rust linen throw, a low pine coffee table, and a slim oak side table. A bit of pine green in a ceramic vase of branches. The room looks lived in: a book on the table, a slight wrinkle in the throw. Tall window at the right, warm sun on the floor. Shot from standing height, 35mm feel. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": "https://vuolo.github.io/palette-queue/week1/fri-pm/01.jpg",
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/mon-pm/01.jpg"
+          "url": null
         },
         {
           "file": "w1-d1-pm-02.jpg",
           "role": "sofa corner",
           "prompt": "A closer photograph of the sofa corner in the same room: cream upholstery, a rust linen pillow, a smaller cream pillow, and an oak side table with a simple ceramic lamp, unlit. Soft late-day light across the fabric. You can see the weave. Quiet, not styled like a catalog. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": "https://vuolo.github.io/palette-queue/week1/fri-pm/02.jpg",
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/mon-pm/02.jpg"
+          "url": null
         },
         {
           "file": "w1-d1-pm-03.jpg",
           "role": "window and bench",
           "prompt": "Looking toward the living room window. Sheer cream curtains, a simple pine bench under the sill, a leafy plant in a rust clay pot, oak floor in a patch of sun. Outside is softly overexposed. Peaceful and ordinary. Same cream, rust, pine, and oak palette. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": "https://vuolo.github.io/palette-queue/week1/fri-pm/03.jpg",
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/mon-pm/03.jpg"
+          "url": null
         },
         {
           "file": "w1-d1-pm-04.jpg",
           "role": "coffee table detail",
           "prompt": "A close photograph of the pine coffee table in the same living room: visible wood grain, a cream ceramic cup, a worn paperback, and a small rust dish with a couple of matches. Afternoon light sliding across the wood. Tight, tactile, slightly messy. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": "https://vuolo.github.io/palette-queue/week1/fri-pm/04.jpg",
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/mon-pm/04.jpg"
+          "url": null
         }
       ],
       "status": "images_ready",
@@ -105,29 +132,25 @@
           "file": "w1-d2-am-01.jpg",
           "role": "linen weave",
           "prompt": "Extreme close-up photograph of heavy cream linen, filling the frame. You can see every thread in the weave, a small natural slub, and a soft fold. Morning sidelight, gentle shadow in the fold. No props, no labels. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/tue-am/01.jpg"
+          "url": null
         },
         {
           "file": "w1-d2-am-02.jpg",
           "role": "clay plaster",
           "prompt": "Extreme close-up of a hand-troweled clay plaster wall in a warm stone-clay color. Irregular trowel marks, matte mineral surface, a soft shadow falling from the left. Feels like a real wall, not a render. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/tue-am/02.jpg"
+          "url": null
         },
         {
           "file": "w1-d2-am-03.jpg",
           "role": "oiled oak",
           "prompt": "Close-up photograph of an oiled white oak board, long grain running diagonally, warm honey tone, tiny pores and a faint milling mark still visible. Soft raking light that makes the grain stand up. No stain blotches, no text. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/tue-am/03.jpg"
+          "url": null
         },
         {
           "file": "w1-d2-am-04.jpg",
           "role": "terracotta rim",
           "prompt": "Close-up of the rim and shoulder of a matte terracotta bowl. You can see the fine grit in the clay, a slightly uneven handmade lip, and a soft highlight on the curve. Neutral background, fallen out of focus. Natural daylight. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/tue-am/04.jpg"
+          "url": null
         }
       ],
       "status": "images_ready",
@@ -146,29 +169,25 @@
           "file": "w1-d2-pm-01.jpg",
           "role": "kitchen wide",
           "prompt": "A small cream kitchen in strong morning light. Simple open pine shelves with everyday plates and a rust pot, a deep farm sink, oak countertops, a brass faucet, and a window over the sink throwing a bright patch of sun on the counter. A linen towel hangs a little crooked. Lived in, not a show kitchen. 35mm, standing at the end of the run of counters. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/tue-pm/01.jpg"
+          "url": null
         },
         {
           "file": "w1-d2-pm-02.jpg",
           "role": "breakfast nook",
           "prompt": "A small breakfast nook in the same kitchen: a square pine table, two simple oak chairs, a cream ceramic bowl, and a window with pale curtains. Morning sun on the tabletop. A rust cushion on one chair. Quiet and ordinary. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/tue-pm/02.jpg"
+          "url": null
         },
         {
           "file": "w1-d2-pm-03.jpg",
           "role": "sink close",
           "prompt": "A close photograph of the kitchen sink in the same house: cream ceramic basin, unlacquered brass tap with a little age, a folded cream linen towel, and a single wet spot on the oak counter in the sun. Tactile and simple. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/tue-pm/03.jpg"
+          "url": null
         },
         {
           "file": "w1-d2-pm-04.jpg",
           "role": "from the doorway",
           "prompt": "The same kitchen seen from the doorway in one frame. You can see the shelves, the sink window, the nook at the side, and a bowl of fruit on the counter. Morning light, cream walls, pine and oak, one rust pot on the stove. Feels like a real apartment kitchen someone actually cooks in. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/tue-pm/04.jpg"
+          "url": null
         }
       ],
       "status": "images_ready",
@@ -187,29 +206,25 @@
           "file": "w1-d3-am-01.jpg",
           "role": "walnut sample board",
           "prompt": "A dark walnut board used as a palette, photographed on a chalk-white plaster table. Four samples sit on it: a sage painted square, a chalk-white plaster square, a polished walnut offcut, and a small unlacquered brass plate. Soft morning light, quiet and precise but handmade. No text. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/wed-am/01.jpg"
+          "url": null
         },
         {
           "file": "w1-d3-am-02.jpg",
           "role": "chalk wall and cards",
           "prompt": "Handmade sage and chalk color cards leaning against a chalk plaster wall, with a thin strip of walnut trim at the bottom and a small brass nail catching the light. Natural daylight from the side, matte surfaces, no lettering. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/wed-am/02.jpg"
+          "url": null
         },
         {
           "file": "w1-d3-am-03.jpg",
           "role": "brass dish of chips",
           "prompt": "A shallow aged-brass dish holding overlapping paint chips in sage and chalk white, sitting on a walnut table. Soft window light, gentle reflections in the metal, no printed type on the chips. Close photograph. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/wed-am/03.jpg"
+          "url": null
         },
         {
           "file": "w1-d3-am-04.jpg",
           "role": "materials cluster",
           "prompt": "A tight cluster of materials on a chalk plaster surface: a folded sage linen napkin, a walnut offcut, a chalky plaster sample, and a short length of unlacquered brass rod. Overhead, simple, tactile. Soft daylight. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/wed-am/04.jpg"
+          "url": null
         }
       ],
       "status": "images_ready",
@@ -228,29 +243,25 @@
           "file": "w1-d3-pm-01.jpg",
           "role": "bedroom wide",
           "prompt": "A quiet bedroom with chalk-white plaster walls, a low walnut bed, rumpled cream and sage linen bedding, oak floor, and a simple walnut dresser. Late-day light from a tall window. A little brass lamp. The bed is made loosely, not hotel-tight. 35mm, standing near the door. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/wed-pm/01.jpg"
+          "url": null
         },
         {
           "file": "w1-d3-pm-02.jpg",
           "role": "bed close",
           "prompt": "A closer photograph of the bed in the same room: heavy cream linen duvet, a sage linen sham, a visible wrinkle, walnut headboard grain, and late light across the fabric. Soft and tactile. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/wed-pm/02.jpg"
+          "url": null
         },
         {
           "file": "w1-d3-pm-03.jpg",
           "role": "window seat",
           "prompt": "A narrow window seat in the same bedroom, chalk walls, a sage linen cushion, a cream throw, and walnut trim around the window. Pale late-afternoon sky outside. Calm, no clutter except one book. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/wed-pm/03.jpg"
+          "url": null
         },
         {
           "file": "w1-d3-pm-04.jpg",
           "role": "nightstand",
           "prompt": "The walnut nightstand in the same bedroom: a small brass lamp, a glass of water, a paperback, and a tiny sage ceramic dish. Soft dusk light, intimate close crop. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
-          "url": null,
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/wed-pm/04.jpg"
+          "url": null
         }
       ],
       "status": "images_ready",
@@ -290,7 +301,7 @@
           "url": null
         }
       ],
-      "status": "planned"
+      "status": "images_ready"
     },
     {
       "id": "w1-d4-pm-reading-nook",
@@ -326,7 +337,7 @@
           "url": null
         }
       ],
-      "status": "planned"
+      "status": "images_ready"
     },
     {
       "id": "w1-d5-am-sand-olive-rust",
@@ -334,7 +345,7 @@
       "time_et": "08:07",
       "slot": "morning",
       "type": "palette_board",
-      "caption": "Sand, olive, rust, and cream. A little earthier this time.",
+      "caption": "Sand, olive, rust, and cream. A little earthier.",
       "carousel": "An earthier palette on linen and clay: a painted board, stacked chips, a wall wash, and a materials flat lay.",
       "images": [
         {
@@ -362,7 +373,7 @@
           "url": null
         }
       ],
-      "status": "planned"
+      "status": "images_ready"
     },
     {
       "id": "w1-d5-pm-dinner-light",
@@ -398,7 +409,7 @@
           "url": null
         }
       ],
-      "status": "planned"
+      "status": "images_ready"
     },
     {
       "id": "w1-d6-am-shaded-patio",
@@ -418,7 +429,7 @@
         {
           "file": "w1-d6-am-02.jpg",
           "role": "patio table",
-          "prompt": "The shaded patio of the same apartment: a small square pine table, two simple chairs, a terracotta pot with a green plant, and filtered sun through a vine or slatted overhang. Cream stucco wall, cool tile floor. Mid-morning, a glass of water on the table. Peaceful, not tropical clich\u00e9. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
+          "prompt": "The shaded patio of the same apartment: a small square pine table, two simple chairs, a terracotta pot with a green plant, and filtered sun through a vine or slatted overhang. Cream stucco wall, cool tile floor. Mid-morning, a glass of water on the table. Peaceful, not tropical cliché. Photorealistic photograph, natural interior styling, lived-in and slightly imperfect, accurate material texture, soft fine film grain, true color, no people, no hands, no text, no typography, no logos, no picture frames around the image, no collage borders, 4:5 portrait composition.",
           "url": null
         },
         {
@@ -434,7 +445,7 @@
           "url": null
         }
       ],
-      "status": "planned"
+      "status": "images_ready"
     },
     {
       "id": "w1-d6-pm-saturday-textures",
@@ -470,7 +481,7 @@
           "url": null
         }
       ],
-      "status": "planned"
+      "status": "images_ready"
     },
     {
       "id": "w1-d7-am-sunday-light",
@@ -506,7 +517,7 @@
           "url": null
         }
       ],
-      "status": "planned"
+      "status": "images_ready"
     },
     {
       "id": "w1-d7-pm-cabin-room",
@@ -542,9 +553,10 @@
           "url": null
         }
       ],
-      "status": "planned"
+      "status": "images_ready"
     }
   ],
   "attribution_note": "Week 1 stills are made with the in-app GenerateImage tool, not the Grok Imagine consumer app, so captions do not use a Created with Grok line. If a later image is made in the Grok app or on grok.com, that credit would apply again.",
-  "account_handle": "softhaus_"
+  "account_handle": "softhaus_",
+  "active_id": "w1-d1-am-v2-morning-rooms"
 }
