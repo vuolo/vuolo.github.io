@@ -169,11 +169,11 @@
 
     <div class="caption-box" style="margin-bottom:1.2rem">
       <p>Add the iPhone Shortcut</p>
-      <p class="steps" style="margin:0 0 0.85rem">This is v2. It downloads the four pictures as image files, copies the caption to the clipboard, then uses Share with Apps to send those images to X. Tap the button on your iPhone, review the actions, and tap Add Shortcut. If you already added v1, add this one too and use v2.</p>
+      <p class="steps" style="margin:0 0 0.85rem">This is v3. Share with Apps failed on v2 because X's share extension rejected the downloaded files. v3 saves JPEG copies to Recents, then lets you pick Share sheet (Photos assets, the same type Photos uses when sharing to X) or Save + open X (notification, then the compose screen; tap the photo icon and pick the last 4). The caption is already on the clipboard. Add this v3 copy; do not reuse v1 or v2.</p>
       <div class="actions">
-        <a class="btn" href="Palette%20Diary%20post%20v2.shortcut">Add Shortcut</a>
+        <a class="btn" href="Palette%20Diary%20post%20v3.shortcut">Add Shortcut</a>
       </div>
-      <p class="steps" style="margin:0.85rem 0 0">If Safari only downloads the file, open the Files app, tap <code>Palette Diary post v2.shortcut</code>, then Open in Shortcuts, then Add Shortcut.</p>
+      <p class="steps" style="margin:0.85rem 0 0">If Safari only downloads the file, open the Files app, tap <code>Palette Diary post v3.shortcut</code>, then Open in Shortcuts, then Add Shortcut.</p>
     </div>
 
     <div class="grid" id="images">
@@ -194,24 +194,18 @@
     <p class="note"><strong>The Post button and the iPhone Shortcut cannot pick the account.</strong> X always uses whichever account is currently active in the app. Open X first and switch to Palette Diary, then come back and post. After the composer opens, paste the caption if it is not already there. The intent link also cannot attach these images. Use the Shortcut (or save the four pictures and add them yourself) for that.</p>
 
     <h2>iPhone Shortcut</h2>
-    <p class="steps">The fastest path is the Add Shortcut button above. After it is added, open X and switch to Palette Diary, then run Palette Diary post v2. It should open X's share sheet with the four images already attached. Paste the caption (it is already on the clipboard).</p>
+    <p class="steps">The fastest path is the Add Shortcut button above. After it is added, open X and switch to Palette Diary, then run Palette Diary post v3. Choose Share sheet to attach the last four Recents photos, or Save + open X and pick them in the composer. Paste the caption if it is not already there.</p>
     <p class="steps">If the import link does not work, you can build the same shortcut by hand in about a minute:</p>
     <ol class="steps">
-      <li>Open Shortcuts, tap <strong>+</strong>, name it <strong>Palette Diary post v2</strong>.</li>
-      <li>Add <strong>Get Contents of URL</strong>. URL: <code>https://vuolo.github.io/palette-queue/caption.txt</code>.</li>
-      <li>Add <strong>Copy to Clipboard</strong>. Input: that caption (not used later as share input).</li>
-      <li>Add <strong>List</strong> and enter the four image URLs from this page.</li>
-      <li>Add <strong>Repeat with Each</strong> on that list.
-        <ol>
-          <li><strong>Get Contents of URL</strong>. URL: <em>Repeat Item</em>.</li>
-          <li><strong>Get Images from Input</strong>. Input: the downloaded file.</li>
-          <li><strong>Add to Variable</strong> named <code>Images</code>.</li>
-        </ol>
-      </li>
-      <li>After the loop, add <strong>Get Variable</strong> <code>Images</code>.</li>
-      <li>Add <strong>Share with Apps</strong> (Share Content with App). Content: the <code>Images</code> variable. App: <strong>X</strong>.</li>
+      <li>Open Shortcuts, tap <strong>+</strong>, name it <strong>Palette Diary post v3</strong>.</li>
+      <li>Add <strong>Get Contents of URL</strong> for <code>caption.txt</code>, then <strong>Copy to Clipboard</strong>.</li>
+      <li>Add a <strong>List</strong> of the four image URLs, then <strong>Repeat with Each</strong>: Get Contents of URL, Get Images from Input, Convert Image to JPEG, Add to Variable <code>Images</code>.</li>
+      <li>After the loop, <strong>Get Variable</strong> <code>Images</code> and <strong>Save to Photo Album</strong> (Recents).</li>
+      <li>Add <strong>Choose from Menu</strong> with <strong>Share sheet</strong> and <strong>Save + open X</strong>.</li>
+      <li>Share sheet: <strong>Get Latest Photos</strong> (4), then the system <strong>Share</strong> action. Choose X and paste the caption.</li>
+      <li>Save + open X: show the notification, then <strong>Open URL</strong> of the X compose link. In X, tap the photo icon, pick the last 4, and post.</li>
     </ol>
-    <p class="steps">A signed import file is at <a href="Palette%20Diary%20post%20v2.shortcut"><code>Palette Diary post v2.shortcut</code></a>.</p>
+    <p class="steps">A signed import file is at <a href="Palette%20Diary%20post%20v3.shortcut"><code>Palette Diary post v3.shortcut</code></a>.</p>
 
     <footer>
       <a href="https://vuolo.github.io/">vuolo.github.io</a>
