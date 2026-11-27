@@ -98,8 +98,8 @@
       "status": "queued",
       "replaces": "w1-d1-am-v2-morning-rooms",
       "notes": "Active first post, published to the live queue on Thu Nov 26 (America/New_York). Mike picked week1/first-post-options/ideas/post-01 (indoor pool house) to replace mon-am-v2. palette-queue remains unchanged.",
-      "caption": "a pool in the middle of the house.",
-      "carousel": "Four stills of a house with an indoor pool: the living space and pool, water and travertine texture, a linen towel and glass at the edge, and the same room seen from the garden.",
+      "caption": "would wake up and go straight in honestly",
+      "carousel": "Two stills of a house with an indoor pool: the living space and pool, and the water and travertine.",
       "images_dir": "week1/first-post-options/ideas/post-01",
       "images": [
         {
@@ -113,18 +113,6 @@
           "role": "water and travertine",
           "url": "https://vuolo.github.io/x/softhaus_/02.jpg",
           "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/first-post-options/ideas/post-01/02.jpg"
-        },
-        {
-          "file": "post-01-03.jpg",
-          "role": "towel and glass at the pool edge",
-          "url": "https://vuolo.github.io/x/softhaus_/03.jpg",
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/first-post-options/ideas/post-01/03.jpg"
-        },
-        {
-          "file": "post-01-04.jpg",
-          "role": "view from the garden",
-          "url": "https://vuolo.github.io/x/softhaus_/04.jpg",
-          "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/first-post-options/ideas/post-01/04.jpg"
         }
       ]
     },
