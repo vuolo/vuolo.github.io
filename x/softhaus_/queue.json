@@ -4,11 +4,11 @@
   "account_working_name": "softhaus",
   "timezone": "America/New_York",
   "attribution": null,
-  "notes": "today.json is the active post the Shortcut reads. caption.txt is that same caption only. Stable image URLs are softhaus-queue/01.jpg through 04.jpg; replace those files when a new post becomes current so Mike does not need a new Shortcut. The old palette-queue page and Palette Diary post v5 Shortcut stay live and still point at the original sample URLs.",
-  "shortcut_url": "https://vuolo.github.io/softhaus-queue/softhaus%20post%20v5.shortcut",
+  "notes": "today.json is the active post the Shortcut reads. caption.txt is that same caption only. Stable image URLs are x/softhaus_/01.jpg through 04.jpg; replace those files when a new post becomes current so Mike does not need a new Shortcut. The old palette-queue page and Palette Diary post v5 Shortcut stay live and still point at the original sample URLs.",
+  "shortcut_url": "https://vuolo.github.io/x/softhaus_/softhaus%20post.shortcut",
   "fallback_shortcut_url": "https://vuolo.github.io/palette-queue/Palette%20Diary%20post%20v5.shortcut",
-  "caption_url": "https://vuolo.github.io/softhaus-queue/caption.txt",
-  "today_url": "https://vuolo.github.io/softhaus-queue/today.json",
+  "caption_url": "https://vuolo.github.io/x/softhaus_/caption.txt",
+  "today_url": "https://vuolo.github.io/x/softhaus_/today.json",
   "posts": [
     {
       "id": "w1-d1-am-pine-cream-palette",
@@ -97,7 +97,7 @@
       "type": "room_mood",
       "status": "queued",
       "replaces": "w1-d1-am-v2-morning-rooms",
-      "notes": "Active first post, published to the live softhaus-queue on Thu Nov 26 (America/New_York). Mike picked week1/first-post-options/ideas/post-01 (indoor pool house) to replace mon-am-v2. palette-queue remains unchanged.",
+      "notes": "Active first post, published to the live queue on Thu Nov 26 (America/New_York). Mike picked week1/first-post-options/ideas/post-01 (indoor pool house) to replace mon-am-v2. palette-queue remains unchanged.",
       "caption": "a pool in the middle of the house.",
       "carousel": "Four stills of a house with an indoor pool: the living space and pool, water and travertine texture, a linen towel and glass at the edge, and the same room seen from the garden.",
       "images_dir": "week1/first-post-options/ideas/post-01",
@@ -105,25 +105,25 @@
         {
           "file": "post-01-01.jpg",
           "role": "pool in the living space",
-          "url": "https://vuolo.github.io/softhaus-queue/01.jpg",
+          "url": "https://vuolo.github.io/x/softhaus_/01.jpg",
           "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/first-post-options/ideas/post-01/01.jpg"
         },
         {
           "file": "post-01-02.jpg",
           "role": "water and travertine",
-          "url": "https://vuolo.github.io/softhaus-queue/02.jpg",
+          "url": "https://vuolo.github.io/x/softhaus_/02.jpg",
           "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/first-post-options/ideas/post-01/02.jpg"
         },
         {
           "file": "post-01-03.jpg",
           "role": "towel and glass at the pool edge",
-          "url": "https://vuolo.github.io/softhaus-queue/03.jpg",
+          "url": "https://vuolo.github.io/x/softhaus_/03.jpg",
           "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/first-post-options/ideas/post-01/03.jpg"
         },
         {
           "file": "post-01-04.jpg",
           "role": "view from the garden",
-          "url": "https://vuolo.github.io/softhaus-queue/04.jpg",
+          "url": "https://vuolo.github.io/x/softhaus_/04.jpg",
           "local_path": "/workspace/income-opportunities/x-autonomous-accounts/week1/first-post-options/ideas/post-01/04.jpg"
         }
       ]
