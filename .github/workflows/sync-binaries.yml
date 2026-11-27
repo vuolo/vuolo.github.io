@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Decode payloads into fonts, assets, and palette-queue
+      - name: Decode payloads into fonts, assets, palette-queue, and softhaus-queue
         run: |
           python3 - << 'PY'
           import base64, io, tarfile, pathlib, subprocess, sys
@@ -20,7 +20,7 @@ jobs:
           payloads = sorted((root / "payloads").glob("*.tar.b64"))
           if not payloads:
               sys.exit("no payloads")
-          allowed_prefix = ("fonts/", "assets/", "palette-queue/")
+          allowed_prefix = ("fonts/", "assets/", "palette-queue/", "softhaus-queue/")
           changed = []
           for payload in payloads:
               data = base64.b64decode("".join(payload.read_text().split()))
