@@ -17,7 +17,7 @@ jobs:
       - name: Decode payloads into fonts, assets, palette-queue, and x/
         run: |
           python3 - << 'PY'
-          import base64, io, tarfile, pathlib, subprocess, sys
+          import base64, io, json, tarfile, pathlib, subprocess, sys
           root = pathlib.Path(".")
           payloads = sorted((root / "payloads").glob("*.tar.b64"))
           if not payloads:
@@ -45,28 +45,61 @@ jobs:
           if sq.is_dir():
               for p in sorted(sq.rglob("*")):
                   if p.is_file() and p.name != "index.html":
-                      rel = str(p.as_posix())
-                      # pathlib relative
                       rel = str(p.relative_to(root))
                       p.unlink()
                       removed.append(rel)
-          if not written and not removed:
+          # Drop numbered stills under x/<handle>/ that the latest
+          # images.txt or today.json no longer lists, so older payloads
+          # cannot resurrect e.g. 03.jpg after a shorter set.
+          pruned = []
+          xroot = root / "x"
+          if xroot.is_dir():
+              for folder in sorted(p for p in xroot.iterdir() if p.is_dir()):
+                  keep = set()
+                  man = folder / "images.txt"
+                  if man.is_file():
+                      for line in man.read_text().splitlines():
+                          line = line.strip()
+                          if line:
+                              keep.add(pathlib.Path(line.split("?")[0]).name)
+                  todayp = folder / "today.json"
+                  if todayp.is_file():
+                      try:
+                          data = json.loads(todayp.read_text())
+                      except Exception:
+                          data = {}
+                      for url in data.get("images") or []:
+                          keep.add(pathlib.Path(str(url).split("?")[0]).name)
+                  if not keep:
+                      continue
+                  for p in sorted(folder.glob("*.jpg")):
+                      if len(p.stem) >= 2 and p.stem[:2].isdigit() and p.name not in keep:
+                          rel = str(p.relative_to(root))
+                          p.unlink()
+                          pruned.append(rel)
+          if not written and not removed and not pruned:
               print("no files in payloads")
               sys.exit(0)
           subprocess.check_call(["git", "config", "user.name", "github-actions[bot]"])
           subprocess.check_call(["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"])
-          # Skip paths deleted by the softhaus-queue cleanup; `git add softhaus-queue` stages those removals.
+          # Skip paths deleted by cleanup; `git add -A` on those dirs stages removals.
           unique = sorted(n for n in set(written) if (root / n).is_file())
           add_paths = list(unique)
           if removed:
               add_paths.append("softhaus-queue")
-          subprocess.check_call(["git", "add", "--"] + add_paths)
+          for rel in pruned:
+              parent = str(pathlib.Path(rel).parent)
+              if parent not in add_paths:
+                  add_paths.append(parent)
+          subprocess.check_call(["git", "add", "-A", "--"] + add_paths)
           if subprocess.call(["git", "diff", "--cached", "--quiet"]) == 0:
               print("no changes")
               sys.exit(0)
           print("updated:", *unique, sep="\n  ")
           if removed:
               print("removed stale softhaus-queue files:", *removed, sep="\n  ")
+          if pruned:
+              print("removed leftover stills:", *pruned, sep="\n  ")
           subprocess.check_call(["git", "commit", "-m", "Decode binary fonts and images"])
           subprocess.check_call(["git", "push"])
           PY
