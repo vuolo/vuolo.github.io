@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Decode payloads into fonts, assets, palette-queue, and softhaus-queue
+      - name: Decode payloads into fonts, assets, palette-queue, and x/
         run: |
           python3 - << 'PY'
           import base64, io, tarfile, pathlib, subprocess, sys
@@ -23,7 +23,7 @@ jobs:
           if not payloads:
               print("no payloads")
               sys.exit(0)
-          allowed_prefix = ("fonts/", "assets/", "palette-queue/", "softhaus-queue/")
+          allowed_prefix = ("fonts/", "assets/", "palette-queue/", "softhaus-queue/", "x/")
           written = []
           for payload in payloads:
               data = base64.b64decode("".join(payload.read_text().split()))
@@ -38,17 +38,34 @@ jobs:
                       dest.parent.mkdir(parents=True, exist_ok=True)
                       dest.write_bytes(tar.extractfile(member).read())
                       written.append(name)
-          if not written:
+          # Old softhaus-queue payloads must not restore a working alias.
+          # Leave only a redirecting index.html (maintained in the repo).
+          sq = root / "softhaus-queue"
+          removed = []
+          if sq.is_dir():
+              for p in sorted(sq.rglob("*")):
+                  if p.is_file() and p.name != "index.html":
+                      rel = str(p.as_posix())
+                      # pathlib relative
+                      rel = str(p.relative_to(root))
+                      p.unlink()
+                      removed.append(rel)
+          if not written and not removed:
               print("no files in payloads")
               sys.exit(0)
           subprocess.check_call(["git", "config", "user.name", "github-actions[bot]"])
           subprocess.check_call(["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"])
           unique = sorted(set(written))
-          subprocess.check_call(["git", "add", "--"] + unique)
+          add_paths = list(unique)
+          if removed:
+              add_paths.append("softhaus-queue")
+          subprocess.check_call(["git", "add", "--"] + add_paths)
           if subprocess.call(["git", "diff", "--cached", "--quiet"]) == 0:
               print("no changes")
               sys.exit(0)
           print("updated:", *unique, sep="\n  ")
+          if removed:
+              print("removed stale softhaus-queue files:", *removed, sep="\n  ")
           subprocess.check_call(["git", "commit", "-m", "Decode binary fonts and images"])
           subprocess.check_call(["git", "push"])
           PY
