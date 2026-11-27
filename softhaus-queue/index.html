@@ -27,6 +27,7 @@
       min-height: 100dvh;
       color-scheme: dark;
     }
+    body.locked { overflow: hidden; }
     .wrap {
       width: min(28rem, 100%);
       margin: 0 auto;
@@ -37,6 +38,7 @@
       border: 1px solid var(--line);
       border-radius: 1rem;
       padding: 0.9rem 0.95rem 1rem;
+      cursor: pointer;
     }
     .tweet {
       display: grid;
@@ -95,6 +97,7 @@
       object-fit: cover;
       display: block;
       background: #16181c;
+      cursor: pointer;
     }
     .actions {
       display: flex;
@@ -160,13 +163,168 @@
       opacity: 0;
       transition: transform 0.25s ease, opacity 0.25s ease;
       pointer-events: none;
+      z-index: 50;
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    .detail {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 20;
+      display: none;
+      flex-direction: column;
+      overflow: auto;
+    }
+    body.show-detail .detail { display: flex; }
+    .detail-bar {
+      position: sticky;
+      top: 0;
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      min-height: 53px;
+      padding: calc(0.35rem + env(safe-area-inset-top)) 0.35rem 0.35rem 0.2rem;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      z-index: 1;
+    }
+    .icon-btn {
+      width: 44px;
+      min-height: 44px;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--text);
+      font: 400 1.45rem/1 var(--sans);
+    }
+    .icon-btn:active { transform: none; background: #181818; }
+    .detail-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .detail-body {
+      width: min(28rem, 100%);
+      margin: 0 auto;
+      padding: 0.85rem 1rem 2rem;
+    }
+    .detail-who {
+      display: flex;
+      gap: 0.7rem;
+      align-items: center;
+    }
+    .detail-names { display: flex; flex-direction: column; line-height: 1.2; }
+    .detail-names .name { font-size: 15px; }
+    .detail-names .handle { font-size: 15px; }
+    .detail .caption {
+      margin: 0.85rem 0 0.9rem;
+      font-size: 17px;
+      line-height: 1.4;
+    }
+    .stamp {
+      margin: 0.85rem 0 0;
+      padding: 0.7rem 0;
+      color: var(--muted);
+      font-size: 15px;
+      border-bottom: 1px solid var(--line);
+    }
+    .eng {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.35rem 0.4rem 0.2rem;
+      color: var(--muted);
+    }
+    .eng span {
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .eng svg { width: 20px; height: 20px; display: block; }
+
+    .viewer {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 30;
+      display: none;
+      touch-action: none;
+    }
+    body.show-viewer .viewer { display: block; }
+    body.show-viewer { overflow: hidden; }
+    .viewer-close {
+      position: absolute;
+      top: calc(0.35rem + env(safe-area-inset-top));
+      left: 0.2rem;
+      z-index: 2;
+      width: 44px;
+      min-height: 44px;
+      border-radius: 50%;
+      background: transparent;
+      color: #fff;
+      font: 400 1.5rem/1 var(--sans);
+    }
+    .viewer-close:active { transform: none; background: rgba(255,255,255,0.1); }
+    .viewer-count {
+      position: absolute;
+      top: calc(0.7rem + env(safe-area-inset-top));
+      right: 0.9rem;
+      z-index: 2;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .viewer-track {
+      height: 100%;
+      display: flex;
+      transition: transform 0.28s ease;
+      will-change: transform;
+    }
+    .viewer-track.dragging { transition: none; }
+    .viewer-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .viewer-slide img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .viewer-dots {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: calc(1.1rem + env(safe-area-inset-bottom));
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      z-index: 2;
+    }
+    .viewer-dots i {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      display: block;
+    }
+    .viewer-dots i.on { background: #fff; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <article class="card">
+  <div class="wrap" id="queue">
+    <article class="card" id="card">
       <div class="tweet">
         <img class="avatar" src="data:image/jpeg;base64,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" alt="">
         <div>
@@ -176,10 +334,10 @@
           </div>
           <p class="caption" id="caption">a pool in the middle of the house.</p>
           <div class="media" id="images">
-            <img src="01.jpg" alt="">
-            <img src="02.jpg" alt="">
-            <img src="03.jpg" alt="">
-            <img src="04.jpg" alt="">
+            <img src="01.jpg" alt="" data-i="0">
+            <img src="02.jpg" alt="" data-i="1">
+            <img src="03.jpg" alt="" data-i="2">
+            <img src="04.jpg" alt="" data-i="3">
           </div>
         </div>
       </div>
@@ -197,13 +355,71 @@
       <a href="04.jpg" download="04.jpg"><img src="04.jpg" alt="4"></a>
     </div>
   </div>
+
+  <div class="detail" id="detail">
+    <div class="detail-bar">
+      <button type="button" class="icon-btn" id="detail-back" aria-label="Back">←</button>
+      <div class="detail-title">Post</div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-who">
+        <img class="avatar" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCABgAGADASIAAhEBAxEB/8QAHQAAAQQDAQEAAAAAAAAAAAAAAAECAwgEBQYHCf/EADkQAAECBAQEAgcGBwEAAAAAAAEAAgMEERIFBiExBxNBYQhRFCIycYGRsUJSY3KywiQlM2KDocHR/8QAGwEAAgIDAQAAAAAAAAAAAAAAAAEEBQMGBwL/xAAoEQACAQQBAgUFAQAAAAAAAAAAAQIDBBESBSFRBjFBsdEicsHh8GH/2gAMAwEAAhEDEQA/AKyURRSURRb00a1sR0S0T6IolgNhlEtE+1FEYDIyiWidRFqMCyNoiifRFqeAyMARRPoghNIMj7UWqW1Fqy6mLYjt7ILVLai1LUWxDaltUtqLUtQ2IrUlqmtRajUNiK1FFLai3TZPUNiKiKKWiLU9Q2JrUW9lPYixZ3EjbkFqLaKcsout4aZAxbPGK8mUBl5CC4elTjm1bCHkPvOPQfOgWKrOFKLnN4SPdNSqSUYrLOLtCLQr45N4fZMhZRjZZiYFJTMgLbxGhhz3upq9zt7j5ilOi8X4q+HGckWxMTyLGiT0Cpc7Do5HNYPw37P9xofeqihzNvVnrL6e2f7oWNbja1OOy6ldbEWrLnJSYk5qLKTcvFl5iE4tiQorC1zCOhB1BUVvZXCWStcsEVqLVLalsT1FuQW9kW9lNai3svWobmVYkLKLJsWXg8oyaxmRlYgJhxpmHDeB1DnAH6qRJJLJEjLLSOp4S8MsSzxPCYjcyTwSE+kebt1eR9iHXd3mdh/pWowfCMNwDBoGFYRKQ5aTgCjIbRueridyT1J3WfLy8rIycOSk4EOWloDBDgwobaNY0dAFDHdUn5LnvIcjUvJ9ekV5L+9TdbOyhbR6dX6s3mUvWl5pw2uApTsVtTWlPJazKIAlJihPtj6LbOHrfBVxNOH4k8MsqZ9licVkzBn2tpCnpcBsZvlU/bHZ3woqt8T+DWaskmJONgnFsIBJE5LMNWN/EZuz36jurt0+0mOALCHCtdCKbqxs+TrWvRPMez/HYg3VhSuOr6PufN4CqW1W+4pcBcvZl5uI5eMLBMVcS5zWM/hox/uaPYPdvyVZc5ZOzDlDETI4/hsWVeSeXE9qHFA6seND9fNbfZcjQu1iLw+z8/2a1dWdW2f1Lp3ObtRasgMRYrJRIO5mWdlushS4j55wKE4VDsRgAj/IFgcvXZdNwoljF4l5fbTaeY75a/8AF6ulrRm+yfsR7ae1aK/1e5bWY1iO8qrGewarMib7fFQlri/UbrlZ0k22UgRLTId98a/Bbg6mhWpym9jpeZY0i5kQXCu2i2p7IANvmmuGtRsg9yl67IAYT0WBjeD4VjuGxcOxeRl52Ui+1CjNuHvHke41WwpokAomm4vKE0msMplx7yPh+R85wpLCHRvQZuWExDZFdcYZLnNLQeoFBvrqvPQzsrB+MKT/AJrl2dA9uXjQifyuaf3LwblrpHFVJV7SE5PL+Hg0Hk1GjdThFYX6Njyl2PBOX5nFHBNPZivd8obitH6L2XScNJtuCZwlsUdB5vJhxKN2qSwtH1UrkZpWlT7X7EDj6cndU/uXuWXnY0CVhPizMVsKG3UucaALznNmf61lMEFaVBmHD9IXMZjx7EsdmHPm4pEKvqwmmjW/+rTuhrmUaa9Tpjl2PYPD5HmJqVxuNNRnxXOiw9XGutCvTjReZ+HdtuC4sepmGfpXppFFjl5jXkI4JicdAk+C8jGlHRK7fRIgDxTxayfNyvgk4B/RnXwyfzMr+1Vx5XZWw8SMl6XwziRAKmWnIMX4Elv7lWH0eg2XQPDlRSskuzfz+TQvENOSvG16pfB//9k=" alt="">
+        <div class="detail-names">
+          <span class="name">softhaus</span>
+          <span class="handle">@softhaus_</span>
+        </div>
+      </div>
+      <p class="caption" id="caption-detail">a pool in the middle of the house.</p>
+      <div class="media" id="images-detail">
+        <img src="01.jpg" alt="" data-i="0">
+        <img src="02.jpg" alt="" data-i="1">
+        <img src="03.jpg" alt="" data-i="2">
+        <img src="04.jpg" alt="" data-i="3">
+      </div>
+      <p class="stamp" id="stamp">Nov 26, 2026</p>
+      <div class="eng" aria-hidden="true">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11.5c0-4.1 3.4-7.5 7.6-7.5h2.8c4.2 0 7.6 3.4 7.6 7.5s-3.4 7.5-7.6 7.5H11l-4.8 3v-3.4c-1.7-1.2-2.7-3.2-2.7-5.1z"/></svg>
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5 8 5l3.5 3.5M8 5v9.5M19.5 15.5 16 19l-3.5-3.5M16 19V9.5"/></svg>
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 19V9M10 19V5M16 19v-7M22 19V8"/></svg>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="viewer" id="viewer">
+    <button type="button" class="viewer-close" id="viewer-close" aria-label="Close">×</button>
+    <div class="viewer-count" id="viewer-count">1 / 4</div>
+    <div class="viewer-track" id="viewer-track">
+      <div class="viewer-slide"><img src="01.jpg" alt=""></div>
+      <div class="viewer-slide"><img src="02.jpg" alt=""></div>
+      <div class="viewer-slide"><img src="03.jpg" alt=""></div>
+      <div class="viewer-slide"><img src="04.jpg" alt=""></div>
+    </div>
+    <div class="viewer-dots" id="viewer-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
+  </div>
+
   <div class="toast" id="toast" role="status">Copied</div>
   <script>
     const DEFAULT_IMAGES = ["01.jpg", "02.jpg", "03.jpg", "04.jpg"];
     let imageUrls = DEFAULT_IMAGES.slice();
+    let mediaIndex = 0;
     const captionEl = document.getElementById("caption");
+    const captionDetail = document.getElementById("caption-detail");
     const toast = document.getElementById("toast");
     const downloads = document.getElementById("downloads");
+    const stampEl = document.getElementById("stamp");
+    const viewer = document.getElementById("viewer");
+    const track = document.getElementById("viewer-track");
+    const countEl = document.getElementById("viewer-count");
+    const dots = [...document.querySelectorAll("#viewer-dots i")];
 
     const currentCaption = () => (captionEl.textContent || "").trim();
 
@@ -220,7 +436,11 @@
 
     const applyImages = (urls) => {
       imageUrls = urls;
-      document.querySelectorAll("#images img").forEach((img, i) => {
+      document.querySelectorAll("#images img, #images-detail img").forEach((img, i) => {
+        const url = urls[i % 4];
+        if (url) img.src = url;
+      });
+      document.querySelectorAll("#viewer-track img").forEach((img, i) => {
         if (urls[i]) img.src = urls[i];
       });
       document.querySelectorAll("#downloads a").forEach((a, i) => {
@@ -229,6 +449,21 @@
         const img = a.querySelector("img");
         if (img) img.src = urls[i];
       });
+    };
+
+    const setCaption = (text) => {
+      const trimmed = String(text || "").trim();
+      if (!trimmed) return;
+      captionEl.textContent = trimmed;
+      captionDetail.textContent = trimmed;
+    };
+
+    const setStamp = (dateStr) => {
+      if (!dateStr) return;
+      const d = new Date(`${dateStr}T12:00:00`);
+      if (isNaN(d)) return;
+      const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      stampEl.textContent = `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
     };
 
     const loadToday = async () => {
@@ -240,6 +475,7 @@
           const data = await res.json();
           text = String(data.caption || "").trim();
           version = String(data.version || data.v || "").trim();
+          setStamp(data.date);
           if (Array.isArray(data.images) && data.images.length) {
             applyImages(data.images.map((url) => withVersion(url, version)));
           } else if (version) {
@@ -253,8 +489,91 @@
           if (res.ok) text = (await res.text()).trim();
         } catch (err) {}
       }
-      if (text) captionEl.textContent = text;
+      setCaption(text);
     };
+
+    const parseHash = () => {
+      const hash = location.hash || "";
+      const media = hash.match(/^#media\/(\d+)/);
+      if (media) {
+        const n = Math.min(4, Math.max(1, parseInt(media[1], 10)));
+        return { view: "media", index: n - 1 };
+      }
+      if (hash === "#post") return { view: "post" };
+      return { view: "queue" };
+    };
+
+    const paintMedia = (index, dx = 0, dragging = false) => {
+      mediaIndex = Math.max(0, Math.min(3, index));
+      track.classList.toggle("dragging", dragging);
+      const width = viewer.clientWidth || window.innerWidth;
+      track.style.transform = `translateX(${-mediaIndex * width + dx}px)`;
+      countEl.textContent = `${mediaIndex + 1} / 4`;
+      dots.forEach((dot, i) => dot.classList.toggle("on", i === mediaIndex));
+    };
+
+    const render = () => {
+      const route = parseHash();
+      document.body.classList.toggle("show-detail", route.view === "post");
+      document.body.classList.toggle("show-viewer", route.view === "media");
+      document.body.classList.toggle("locked", route.view !== "queue");
+      if (route.view === "media") paintMedia(route.index);
+    };
+
+    const go = (hash) => {
+      const next = hash || location.pathname + location.search;
+      if ((hash || "") === (location.hash || "")) {
+        render();
+        return;
+      }
+      history.pushState({ view: hash || "queue" }, "", next);
+      render();
+    };
+
+    const back = () => {
+      if (history.state && history.state.view) {
+        history.back();
+        return;
+      }
+      const route = parseHash();
+      if (route.view === "media") {
+        history.pushState({ view: "queue" }, "", location.pathname + location.search);
+        history.replaceState({ view: "queue" }, "", location.pathname + location.search);
+        render();
+        return;
+      }
+      if (route.view === "post") {
+        history.replaceState({ view: "queue" }, "", location.pathname + location.search);
+        render();
+        return;
+      }
+      render();
+    };
+
+    document.getElementById("card").addEventListener("click", (e) => {
+      if (e.target.closest("img") && e.target.closest(".media")) return;
+      go("#post");
+    });
+
+    document.getElementById("detail-back").addEventListener("click", (e) => {
+      e.preventDefault();
+      back();
+    });
+
+    document.getElementById("viewer-close").addEventListener("click", (e) => {
+      e.preventDefault();
+      back();
+    });
+
+    const onMediaTap = (e) => {
+      const img = e.target.closest("img[data-i]");
+      if (!img) return;
+      e.preventDefault();
+      e.stopPropagation();
+      go(`#media/${Number(img.dataset.i) + 1}`);
+    };
+    document.getElementById("images").addEventListener("click", onMediaTap);
+    document.getElementById("images-detail").addEventListener("click", onMediaTap);
 
     document.getElementById("copy").addEventListener("click", async () => {
       const caption = currentCaption();
@@ -292,6 +611,103 @@
       downloads.classList.add("show");
     });
 
+    let startX = 0, startY = 0, lastX = 0, lastY = 0, axis = null, swiping = false;
+    const startAt = (x, y) => {
+      startX = lastX = x;
+      startY = lastY = y;
+      axis = null;
+      swiping = true;
+      viewer.style.transition = "none";
+      track.classList.add("dragging");
+    };
+    const moveAt = (x, y, ev) => {
+      if (!swiping) return;
+      lastX = x;
+      lastY = y;
+      const dx = x - startX;
+      const dy = y - startY;
+      if (!axis && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
+        axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+      }
+      if (axis === "x") {
+        if (ev) ev.preventDefault();
+        const atStart = mediaIndex === 0 && dx > 0;
+        const atEnd = mediaIndex === 3 && dx < 0;
+        const resist = (atStart || atEnd) ? 0.35 : 1;
+        paintMedia(mediaIndex, dx * resist, true);
+      } else if (axis === "y" && dy > 0) {
+        if (ev) ev.preventDefault();
+        const p = Math.min(1, dy / 320);
+        viewer.style.transform = `translateY(${dy}px)`;
+        viewer.style.opacity = String(1 - p * 0.5);
+      }
+    };
+    const endAt = () => {
+      if (!swiping) return;
+      swiping = false;
+      track.classList.remove("dragging");
+      const dx = lastX - startX;
+      const dy = lastY - startY;
+      const width = viewer.clientWidth || window.innerWidth;
+      viewer.style.transition = "";
+      viewer.style.transform = "";
+      viewer.style.opacity = "";
+      if (axis === "x" && Math.abs(dx) > Math.min(64, width * 0.18)) {
+        paintMedia(mediaIndex + (dx < 0 ? 1 : -1));
+        history.replaceState({ view: "media" }, "", `#media/${mediaIndex + 1}`);
+      } else if (axis === "y" && dy > 90) {
+        back();
+      } else if (!axis || (Math.abs(dx) < 8 && Math.abs(dy) < 8)) {
+        back();
+      } else {
+        paintMedia(mediaIndex);
+      }
+    };
+
+    viewer.addEventListener("touchstart", (e) => {
+      if (e.target.closest(".viewer-close")) return;
+      const t = e.changedTouches[0];
+      startAt(t.clientX, t.clientY);
+    }, { passive: true });
+    viewer.addEventListener("touchmove", (e) => {
+      const t = e.changedTouches[0];
+      moveAt(t.clientX, t.clientY, e);
+    }, { passive: false });
+    viewer.addEventListener("touchend", endAt);
+    viewer.addEventListener("touchcancel", endAt);
+
+    viewer.addEventListener("mousedown", (e) => {
+      if (e.target.closest(".viewer-close")) return;
+      startAt(e.clientX, e.clientY);
+    });
+    window.addEventListener("mousemove", (e) => {
+      if (!swiping) return;
+      moveAt(e.clientX, e.clientY, e);
+    });
+    window.addEventListener("mouseup", endAt);
+
+    window.addEventListener("keydown", (e) => {
+      if (!document.body.classList.contains("show-viewer")) {
+        if (e.key === "Escape" && document.body.classList.contains("show-detail")) back();
+        return;
+      }
+      if (e.key === "Escape") back();
+      if (e.key === "ArrowLeft") {
+        paintMedia(mediaIndex - 1);
+        history.replaceState({ view: "media" }, "", `#media/${mediaIndex + 1}`);
+      }
+      if (e.key === "ArrowRight") {
+        paintMedia(mediaIndex + 1);
+        history.replaceState({ view: "media" }, "", `#media/${mediaIndex + 1}`);
+      }
+    });
+
+    window.addEventListener("popstate", render);
+    window.addEventListener("resize", () => {
+      if (document.body.classList.contains("show-viewer")) paintMedia(mediaIndex);
+    });
+
+    render();
     loadToday();
   </script>
 </body>
