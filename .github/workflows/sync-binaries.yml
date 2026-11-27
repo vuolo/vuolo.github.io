@@ -1,6 +1,8 @@
 name: Sync binary assets
 on:
   push:
+    branches:
+      - main
     paths:
       - "payloads/**"
       - ".github/workflows/sync-binaries.yml"
@@ -19,9 +21,10 @@ jobs:
           root = pathlib.Path(".")
           payloads = sorted((root / "payloads").glob("*.tar.b64"))
           if not payloads:
-              sys.exit("no payloads")
+              print("no payloads")
+              sys.exit(0)
           allowed_prefix = ("fonts/", "assets/", "palette-queue/", "softhaus-queue/")
-          changed = []
+          written = []
           for payload in payloads:
               data = base64.b64decode("".join(payload.read_text().split()))
               with tarfile.open(fileobj=io.BytesIO(data), mode="r") as tar:
@@ -33,17 +36,19 @@ jobs:
                           sys.exit(f"refusing path {name}")
                       dest = root / name
                       dest.parent.mkdir(parents=True, exist_ok=True)
-                      blob = tar.extractfile(member).read()
-                      if not dest.exists() or dest.read_bytes() != blob:
-                          dest.write_bytes(blob)
-                          changed.append(name)
-          if not changed:
-              print("no changes")
+                      dest.write_bytes(tar.extractfile(member).read())
+                      written.append(name)
+          if not written:
+              print("no files in payloads")
               sys.exit(0)
-          print("updated:", *changed, sep="\n  ")
           subprocess.check_call(["git", "config", "user.name", "github-actions[bot]"])
           subprocess.check_call(["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"])
-          subprocess.check_call(["git", "add", "--"] + changed)
+          unique = sorted(set(written))
+          subprocess.check_call(["git", "add", "--"] + unique)
+          if subprocess.call(["git", "diff", "--cached", "--quiet"]) == 0:
+              print("no changes")
+              sys.exit(0)
+          print("updated:", *unique, sep="\n  ")
           subprocess.check_call(["git", "commit", "-m", "Decode binary fonts and images"])
           subprocess.check_call(["git", "push"])
           PY
