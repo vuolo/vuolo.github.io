@@ -1,7 +1,7 @@
 {
   "date": "2026-11-27",
-  "id": "late-night-food-01",
-  "caption": "friday night and i've already planned a four-stop problem. diner booth, tacos from the truck, a ramen counter, then pizza by the slice.",
+  "id": "white-test1",
+  "caption": "all bricks. the cat is asleep on the rack, the slice is a two-handed job, cafecito at the window, and the iguana got to the atm first.",
   "images": [
     "01.jpg",
     "02.jpg",
@@ -11,11 +11,11 @@
   "caption_url": "https://vuolo.github.io/x/unhingedbricks/caption.txt",
   "format": "x-queue/v1",
   "timezone": "America/New_York",
-  "status": "queued",
+  "status": "staged",
   "account": "unhinged bricks",
   "handle": "unhingedbricks",
   "queue_url": "https://vuolo.github.io/x/unhingedbricks/",
-  "notes": "First @unhingedbricks post, queued to go out tonight 2026-11-27 America/New_York (files also live in posts/2026-11-29/). Theme: late night food. Caption rewritten for the unhinged/local/specific vibe. 01 diner aisle-between-booths (not the old header; old diner had a twisted teal figure and a white-shirt stool figure with a teal block instead of legs). 02 taco truck uses 1x1 tile-mosaic food only. 03 ramen has brick-tile bowls and visible sitting legs. 04 pizza is brick-tile pies, chef has no nametag. x-softhaus signs the Shortcut and deploys to x/unhingedbricks/ (redirecting brickhaus__). This today.json uses the new live URLs. shortcut_url omitted because x-softhaus signs the new Shortcut itself.",
-  "version": "20261127-1744",
+  "notes": "Staged next-post payload for the white product-shot set (bodega / buck slice / cafecito / atm iguana) after Mike approved white test 1 and the first late-night post went out. Packed from brickhaus/queue-white-test1/ so brickhaus/queue-page/ (the live late-night post) was not overwritten. Not deployed.",
+  "version": "20261127-2141",
   "shortcut_url": "https://vuolo.github.io/x/unhingedbricks/unhingedbricks%20post.shortcut"
 }
